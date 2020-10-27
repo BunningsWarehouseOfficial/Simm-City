@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsActivity">
+
+    <EditText
+        android:id="@+id/familySizeInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="3"
+        android:hint="@string/family_size_value"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/familySizeText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/familySizeText"
+        app:layout_constraintTop_toTopOf="@+id/familySizeText"
+        android:importantForAutofill="no" />
+
+    <TextView
+        android:id="@+id/salaryText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/salary"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/taxRateText"
+        app:layout_constraintEnd_toStartOf="@+id/salaryInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shopSizeText" />
+
+    <TextView
+        android:id="@+id/settingsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/settings"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/familySizeText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/familySizeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/family_size"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/shopSizeText"
+        app:layout_constraintEnd_toStartOf="@+id/familySizeInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settingsText" />
+
+    <TextView
+        android:id="@+id/shopSizeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/shop_size"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/salaryText"
+        app:layout_constraintEnd_toStartOf="@+id/shopSizeInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/familySizeText" />
+
+    <TextView
+        android:id="@+id/taxRateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/tax_rate"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/taxRateInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/salaryText" />
+
+    <EditText
+        android:id="@+id/taxRateInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:ems="3"
+        android:hint="@string/tax_rate_value"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toBottomOf="@+id/taxRateText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/taxRateText"
+        app:layout_constraintTop_toTopOf="@+id/taxRateText"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/salaryInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="3"
+        android:hint="@string/salary_value"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/salaryText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/salaryText"
+        app:layout_constraintTop_toTopOf="@+id/salaryText"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/shopSizeInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="3"
+        android:hint="@string/shop_size_value"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/shopSizeText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/shopSizeText"
+        app:layout_constraintTop_toTopOf="@+id/shopSizeText"
+        android:importantForAutofill="no" />
+
+    <Button
+        android:id="@+id/defaultButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/default_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taxRateText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
