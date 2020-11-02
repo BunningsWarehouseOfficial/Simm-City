@@ -12,48 +12,43 @@ public class GameData {
 
     //TODO constants
 
-    private Settings settings;
-    //private MapElement[][] map;
-    private int money;
-    private int gameTime = 0; //TODO check
+    private Settings mSettings;
+    //private MapElement[][] map; //TODO MapData here?
+    private int mMoney;
+    private int mGameTime = 0; //TODO check if it should = 0
+    private Structure mSelectedStructure;
 
     //Constructor
     private GameData() {
-        settings = new Settings();
-        money = settings.getInitialMoney();
+        mSettings = new Settings();
+        mMoney    = mSettings.getInitialMoney();
     }
 
     //Accessors
-    public static GameData getsInstance() {
-        return sInstance;
-    }
     public Settings getSettings() {
-        return settings;
+        return mSettings;
     }
-    //public MapElement[][] getMap() {
-        //return map;
-    //}
     public int getMoney() {
-        return money;
+        return mMoney;
     }
     public int getGameTime() {
-        return gameTime;
+        return mGameTime;
+    }
+    public Structure getSelectedStructure() {
+        return mSelectedStructure;
     }
 
     //Mutators
-    public static void setsInstance(GameData sInstance) {
-        GameData.sInstance = sInstance;
+    public void setSettings(Settings mSettings) {
+        this.mSettings = mSettings;
     }
-    public void setSettings(Settings settings) {
-        this.settings = settings;
+    public void setMoney(int mMoney) {
+        this.mMoney = mMoney;
     }
-    //public void setMap(MapElement[][] map) {
-        //this.map = map;
-    //}
-    public void setMoney(int money) {
-        this.money = money;
+    public void setGameTime(int mGameTime) {
+        this.mGameTime = mGameTime;
     }
-    public void setGameTime(int gameTime) {
-        this.gameTime = gameTime;
+    public void setSelectedStructure(Structure mSelectedStructure) {
+        this.mSelectedStructure = mSelectedStructure;
     }
 }

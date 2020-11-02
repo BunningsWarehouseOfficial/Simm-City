@@ -1,7 +1,7 @@
 package curtin.krados.simmcity.model;
 
 public class Settings {
-    private int mapWidth = 50;
+    private int mapWidth = 30; //TODO Changed from 50, which is required
     private int mapHeight = 10;
     private int initialMoney = 1000;
     private int familySize = 4;
@@ -18,7 +18,7 @@ public class Settings {
 
     }
 
-    //Accessors
+    //Accessors //TODO remove unused methods
     public int getMapWidth() {
         return mapWidth;
     }

@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
-//TODO TextWatcher for input validation, but just use Toasts to start with
+//TODO TextWatcher for input validation
 //TODO Update Android Studio to 4.1
 //TODO Remove unused (grey) methods
+//TODO Implement JavaDocs
+//TODO ContentDescriptions
+//TODO Remove redundant imports
