@@ -16,71 +16,8 @@ import curtin.krados.simmcity.model.MapElement;
 import curtin.krados.simmcity.model.Structure;
 
 public class MapFragment extends Fragment {
-    //RecyclerView ViewHolder implementation
-    private class MapViewHolder extends RecyclerView.ViewHolder {
-        ImageView mNorthWestImage;
-        ImageView mSouthWestImage;
-        ImageView mNorthEastImage;
-        ImageView mSouthEastImage;
-        ImageView mStructureImage;
-
-        MapElement mMapElement;
-
-        //Constructor
-        public MapViewHolder(LayoutInflater li, ViewGroup parent) {
-            super(li.inflate(R.layout.grid_cell, parent, false));
-
-            //Retrieving references using itemView superclass field
-            mNorthEastImage = itemView.findViewById(R.id.northEast);
-            mNorthWestImage = itemView.findViewById(R.id.northWest);
-            mSouthEastImage = itemView.findViewById(R.id.southEast);
-            mSouthWestImage = itemView.findViewById(R.id.southWest);
-            mStructureImage = itemView.findViewById(R.id.topImageView);
-            mMapElement = null;
-
-            //Setting size of the cell view
-            int size = parent.getMeasuredHeight() / MapData.HEIGHT + 1;
-            ViewGroup.LayoutParams lp = itemView.getLayoutParams();
-            lp.width = size;
-            lp.height = size;
-        }
-
-        public void bind(MapElement mapElement) {
-            //Binding values to the view
-            mNorthEastImage.setImageResource(mapElement.getNorthEast());
-            mNorthWestImage.setImageResource(mapElement.getNorthWest());
-            mSouthEastImage.setImageResource(mapElement.getSouthEast());
-            mSouthWestImage.setImageResource(mapElement.getSouthWest());
-            Structure elementStructure = mapElement.getStructure();
-            if (elementStructure != null) {
-                mStructureImage.setVisibility(View.VISIBLE); //TODO is visibility thing needed?
-                mStructureImage.setImageResource(elementStructure.getDrawableId());
-            }
-            else {
-                mStructureImage.setVisibility(View.INVISIBLE);
-            }
-            mMapElement = mapElement;
-
-            //Implementing callback / event handler for building currently selected structure
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Structure selected = GameData.get().getSelectedStructure();
-
-                    if (selected != null) {
-                        //Assign the new structure to the element
-                        mMapElement.setStructure(selected);
-
-                        //Update the adapter
-                        //this.notifyItemChanged(getAdapterPosition()); //FIXME Needed
-                    }
-                }
-            });
-        }
-    }
-
     //RecyclerView Adapter implementation
-    private class MapAdapter extends RecyclerView.Adapter<MapViewHolder> {
+    private class MapAdapter extends RecyclerView.Adapter<MapAdapter.MapViewHolder> {
         private MapData mMapData;
 
         //Constructor
@@ -105,6 +42,69 @@ public class MapFragment extends Fragment {
             int row = index % MapData.HEIGHT;
             int col = index / MapData.HEIGHT;
             vh.bind(mMapData.get(row, col));
+        }
+
+        //RecyclerView ViewHolder implementation
+        private class MapViewHolder extends RecyclerView.ViewHolder {
+            ImageView mNorthWestImage;
+            ImageView mSouthWestImage;
+            ImageView mNorthEastImage;
+            ImageView mSouthEastImage;
+            ImageView mStructureImage;
+
+            MapElement mMapElement;
+
+            //Constructor
+            public MapViewHolder(LayoutInflater li, ViewGroup parent) {
+                super(li.inflate(R.layout.grid_cell, parent, false));
+
+                //Retrieving references using itemView superclass field
+                mNorthEastImage = itemView.findViewById(R.id.northEast);
+                mNorthWestImage = itemView.findViewById(R.id.northWest);
+                mSouthEastImage = itemView.findViewById(R.id.southEast);
+                mSouthWestImage = itemView.findViewById(R.id.southWest);
+                mStructureImage = itemView.findViewById(R.id.topImageView);
+                mMapElement = null;
+
+                //Setting size of the cell view
+                int size = parent.getMeasuredHeight() / MapData.HEIGHT + 1;
+                ViewGroup.LayoutParams lp = itemView.getLayoutParams();
+                lp.width = size;
+                lp.height = size;
+            }
+
+            public void bind(MapElement mapElement) {
+                //Binding values to the view
+                mNorthEastImage.setImageResource(mapElement.getNorthEast());
+                mNorthWestImage.setImageResource(mapElement.getNorthWest());
+                mSouthEastImage.setImageResource(mapElement.getSouthEast());
+                mSouthWestImage.setImageResource(mapElement.getSouthWest());
+                Structure elementStructure = mapElement.getStructure();
+                if (elementStructure != null) {
+                    mStructureImage.setVisibility(View.VISIBLE); //TODO is visibility thing needed?
+                    mStructureImage.setImageResource(elementStructure.getDrawableId());
+                }
+                else {
+                    mStructureImage.setVisibility(View.INVISIBLE);
+                }
+                mMapElement = mapElement;
+
+                //Implementing callback / event handler for building currently selected structure
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Structure selected = GameData.get().getSelectedStructure();
+
+                        if (selected != null) { //TODO restrict to only building next to roads
+                            //Assign the new structure to the element
+                            mMapElement.setStructure(selected);
+
+                            //Update the adapter
+                            MapAdapter.this.notifyItemChanged(getAdapterPosition());
+                        }
+                    }
+                });
+            }
         }
     }
 
