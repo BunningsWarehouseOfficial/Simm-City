@@ -1,5 +1,6 @@
 package curtin.krados.simmcity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,39 +18,8 @@ import curtin.krados.simmcity.model.Structure;
 import curtin.krados.simmcity.model.StructureData;
 
 public class SelectorFragment extends Fragment {
-    //RecyclerView ViewHolder implementation
-    private class SelectorViewHolder extends RecyclerView.ViewHolder {
-        private ImageView mImage;
-        private TextView mLabel;
-
-        //Constructor
-        public SelectorViewHolder(LayoutInflater li, ViewGroup parent) {
-            super(li.inflate(R.layout.list_selection, parent, false));
-
-            //Retrieving references using itemView superclass field
-            mImage = itemView.findViewById(R.id.image);
-            mLabel = itemView.findViewById(R.id.label);
-        }
-
-        public void bind(final Structure structure) {
-            //Binding values to the view
-            mImage.setImageResource(structure.getDrawableId());
-            mLabel.setText(structure.getLabel());
-
-            //Implementing callback / event handler for selecting a structure
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    GameData.get().setSelectedStructure(structure);
-
-                    //TODO Highlight the selected structure
-                }
-            });
-        }
-    }
-
     //RecyclerView Adapter implementation
-    private class SelectorAdapter extends RecyclerView.Adapter<SelectorViewHolder> {
+    private class SelectorAdapter extends RecyclerView.Adapter<SelectorAdapter.SelectorViewHolder> {
         private StructureData mStructureData;
 
         //Constructor
@@ -71,6 +41,52 @@ public class SelectorFragment extends Fragment {
         @Override
         public void onBindViewHolder(SelectorViewHolder vh, int index) {
             vh.bind(mStructureData.get(index));
+        }
+
+        //RecyclerView ViewHolder implementation
+        private class SelectorViewHolder extends RecyclerView.ViewHolder {
+            private ImageView mImage;
+            private TextView mLabel;
+
+            //Constructor
+            public SelectorViewHolder(LayoutInflater li, ViewGroup parent) {
+                super(li.inflate(R.layout.list_selection, parent, false));
+
+                //Retrieving references using itemView superclass field
+                mImage = itemView.findViewById(R.id.image);
+                mLabel = itemView.findViewById(R.id.label);
+            }
+
+            public void bind(final Structure structure) {
+                //Binding values to the view
+                mImage.setImageResource(structure.getDrawableId());
+                mLabel.setText(structure.getLabel());
+
+                //Highlight the structure if it is selected, otherwise keep a white background
+                if (structure.equals(GameData.get().getSelectedStructure())) {
+                    itemView.setBackgroundColor(Color.parseColor("#E0E0E0"));
+                }
+                else {
+                    itemView.setBackgroundColor(Color.parseColor("#ffffff"));
+                }
+
+                //Implementing callback / event handler for selecting a structure
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        GameData data = GameData.get();
+                        data.setSelectedStructure(structure);
+
+                        //Updating current selection to highlight background
+                        SelectorAdapter.this.notifyItemChanged(getAdapterPosition());
+
+                        //Updating previous selection to remove highlighted background
+                        int prev = data.getPreviousStructureIndex();
+                        SelectorAdapter.this.notifyItemChanged(prev);
+                        data.setPreviousStructureIndex(getAdapterPosition());
+                    }
+                });
+            }
         }
     }
 

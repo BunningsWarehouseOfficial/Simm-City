@@ -17,6 +17,7 @@ public class GameData {
     private int mMoney;
     private int mGameTime = 0; //TODO check if it should = 0
     private Structure mSelectedStructure;
+    private int mPreviousStructureIndex;
 
     //Constructor
     private GameData() {
@@ -37,18 +38,24 @@ public class GameData {
     public Structure getSelectedStructure() {
         return mSelectedStructure;
     }
+    public int getPreviousStructureIndex() {
+        return mPreviousStructureIndex;
+    }
 
     //Mutators
-    public void setSettings(Settings mSettings) {
-        this.mSettings = mSettings;
+    public void setSettings(Settings settings) {
+        mSettings = settings;
     }
-    public void setMoney(int mMoney) {
-        this.mMoney = mMoney;
+    public void setMoney(int money) {
+        mMoney = money;
     }
-    public void setGameTime(int mGameTime) {
-        this.mGameTime = mGameTime;
+    public void setGameTime(int gameTime) {
+        mGameTime = gameTime;
     }
-    public void setSelectedStructure(Structure mSelectedStructure) {
-        this.mSelectedStructure = mSelectedStructure;
+    public void setSelectedStructure(Structure selectedStructure) {
+        mSelectedStructure = selectedStructure;
+    }
+    public void setPreviousStructureIndex(int previousStructureIndex) {
+        mPreviousStructureIndex = previousStructureIndex;
     }
 }

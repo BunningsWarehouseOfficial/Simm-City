@@ -35,7 +35,7 @@ public class StructureData
             new Residential(R.drawable.ic_building4, "House"),
             new Commercial(R.drawable.ic_building5, "Factory"),
             new Commercial(R.drawable.ic_building8, "Factory"),
-            new Commercial(R.drawable.ic_building6, "Warehouse"),
+            new Commercial(R.drawable.ic_building6, "Storage"),
             new Commercial(R.drawable.ic_building7, "Hall"),
             new Road(R.drawable.ic_road_ns, "Road"),
             new Road(R.drawable.ic_road_ew, "Road"),
