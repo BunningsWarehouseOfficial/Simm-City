@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = SettingsActivity.getIntent(MainActivity.this);
-                startActivity(intent);
+                startActivity(intent); //TODO Block entering settings screen if there is a running game
             }
         });
     }

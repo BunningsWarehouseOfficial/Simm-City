@@ -9,9 +9,9 @@ import android.content.Intent;
 import android.os.Bundle;
 
 public class GameActivity extends AppCompatActivity {
-    private StatusBarFragment statusBar;
-    private MapFragment map;
-    private SelectorFragment selector;
+    private StatusBarFragment mStatusBar;
+    private MapFragment mMap;
+    private SelectorFragment mSelector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,21 +20,21 @@ public class GameActivity extends AppCompatActivity {
 
         //Setting up the fragments
         FragmentManager fm = getSupportFragmentManager();
-        statusBar = (StatusBarFragment) fm.findFragmentById(R.id.statusBarFrame);
-        map       = (MapFragment) fm.findFragmentById(R.id.mapFrame);
-        selector  = (SelectorFragment) fm.findFragmentById(R.id.selectorFrame);
+        mStatusBar = (StatusBarFragment) fm.findFragmentById(R.id.statusBarFrame);
+        mMap = (MapFragment) fm.findFragmentById(R.id.mapFrame);
+        mSelector = (SelectorFragment) fm.findFragmentById(R.id.selectorFrame);
         FragmentTransaction ft = fm.beginTransaction();
-        if (statusBar == null) {
-            statusBar = new StatusBarFragment();
-            ft.add(R.id.statusBarFrame, statusBar);
+        if (mStatusBar == null) {
+            mStatusBar = new StatusBarFragment();
+            ft.add(R.id.statusBarFrame, mStatusBar);
         }
-        if (map == null) {
-            map = new MapFragment();
-            ft.add(R.id.mapFrame, map);
+        if (mMap == null) {
+            mMap = new MapFragment();
+            ft.add(R.id.mapFrame, mMap);
         }
-        if (selector == null) {
-            selector = new SelectorFragment();
-            ft.add(R.id.selectorFrame, selector);
+        if (mSelector == null) {
+            mSelector = new SelectorFragment();
+            ft.add(R.id.selectorFrame, mSelector);
         }
         ft.commit();
     }

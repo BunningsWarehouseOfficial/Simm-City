@@ -7,29 +7,43 @@
     tools:context=".SettingsActivity">
 
     <EditText
-        android:id="@+id/familySizeInput"
+        android:id="@+id/initialMoneyInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="3"
-        android:hint="@string/family_size_value"
+        android:hint="@string/initial_money_value"
+        android:importantForAutofill="no"
         android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="@+id/familySizeText"
+        app:layout_constraintBottom_toBottomOf="@+id/initialMoneyText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/familySizeText"
-        app:layout_constraintTop_toTopOf="@+id/familySizeText"
-        android:importantForAutofill="no" />
+        app:layout_constraintStart_toEndOf="@+id/initialMoneyText"
+        app:layout_constraintTop_toTopOf="@+id/initialMoneyText" />
 
-    <TextView
-        android:id="@+id/salaryText"
+    <EditText
+        android:id="@+id/mapHeightInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/salary"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/taxRateText"
-        app:layout_constraintEnd_toStartOf="@+id/salaryInput"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shopSizeText" />
+        android:ems="3"
+        android:hint="@string/map_height_value"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/mapHeightText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/mapHeightText"
+        app:layout_constraintTop_toTopOf="@+id/mapHeightText" />
+
+    <EditText
+        android:id="@+id/mapWidthInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="3"
+        android:hint="@string/map_width_value"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/mapWidthText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/mapWidthText"
+        app:layout_constraintTop_toTopOf="@+id/mapWidthText" />
 
     <TextView
         android:id="@+id/settingsText"
@@ -39,34 +53,46 @@
         android:text="@string/settings"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/familySizeText"
+        app:layout_constraintBottom_toTopOf="@id/mapWidthText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/familySizeText"
+        android:id="@+id/mapWidthText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="@string/family_size"
+        android:text="@string/map_width"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/shopSizeText"
-        app:layout_constraintEnd_toStartOf="@+id/familySizeInput"
+        app:layout_constraintBottom_toTopOf="@+id/mapHeightText"
+        app:layout_constraintEnd_toStartOf="@+id/mapWidthInput"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settingsText" />
 
     <TextView
-        android:id="@+id/shopSizeText"
+        android:id="@+id/mapHeightText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="@string/shop_size"
+        android:text="@string/map_height"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/salaryText"
-        app:layout_constraintEnd_toStartOf="@+id/shopSizeInput"
+        app:layout_constraintBottom_toTopOf="@+id/initialMoneyText"
+        app:layout_constraintEnd_toStartOf="@+id/mapHeightInput"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/familySizeText" />
+        app:layout_constraintTop_toBottomOf="@+id/mapWidthText" />
+
+    <TextView
+        android:id="@+id/initialMoneyText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/initial_money"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/taxRateText"
+        app:layout_constraintEnd_toStartOf="@+id/initialMoneyInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mapHeightText" />
 
     <TextView
         android:id="@+id/taxRateText"
@@ -77,7 +103,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/taxRateInput"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/salaryText" />
+        app:layout_constraintTop_toBottomOf="@+id/initialMoneyText" />
 
     <EditText
         android:id="@+id/taxRateInput"
@@ -91,32 +117,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/taxRateText"
         app:layout_constraintTop_toTopOf="@+id/taxRateText"
-        android:importantForAutofill="no" />
-
-    <EditText
-        android:id="@+id/salaryInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="3"
-        android:hint="@string/salary_value"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="@+id/salaryText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/salaryText"
-        app:layout_constraintTop_toTopOf="@+id/salaryText"
-        android:importantForAutofill="no" />
-
-    <EditText
-        android:id="@+id/shopSizeInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="3"
-        android:hint="@string/shop_size_value"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="@+id/shopSizeText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/shopSizeText"
-        app:layout_constraintTop_toTopOf="@+id/shopSizeText"
         android:importantForAutofill="no" />
 
     <Button

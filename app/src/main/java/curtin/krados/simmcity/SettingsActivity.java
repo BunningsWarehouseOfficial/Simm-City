@@ -14,9 +14,9 @@ import curtin.krados.simmcity.model.GameData;
 public class SettingsActivity extends AppCompatActivity {
     private GameData data;
 
-    private EditText mFamilySizeInput;
-    private EditText mShopSizeInput;
-    private EditText mSalaryInput;
+    private EditText mMapWidthInput;
+    private EditText mMapHeightInput;
+    private EditText mInitialMoneyInput;
     private EditText mTaxRateInput;
 
     @Override
@@ -26,80 +26,84 @@ public class SettingsActivity extends AppCompatActivity {
         data = GameData.get();
 
         //Retrieving references
-        mFamilySizeInput = (EditText) findViewById(R.id.familySizeInput);
-        mShopSizeInput   = (EditText) findViewById(R.id.shopSizeInput);
-        mSalaryInput     = (EditText) findViewById(R.id.salaryInput);
-        mTaxRateInput    = (EditText) findViewById(R.id.taxRateInput);
+        mMapWidthInput     = (EditText) findViewById(R.id.mapWidthInput);
+        mMapHeightInput    = (EditText) findViewById(R.id.mapHeightInput);
+        mInitialMoneyInput = (EditText) findViewById(R.id.initialMoneyInput);
+        mTaxRateInput      = (EditText) findViewById(R.id.taxRateInput);
 
-        //Initialise EditText values
-        mFamilySizeInput.setHint(getString(R.string.family_size_value, data.getSettings().getFamilySize()));
-        mShopSizeInput  .setHint(getString(R.string.shop_size_value, data.getSettings().getShopSize()));
-        mSalaryInput    .setHint(getString(R.string.salary_value, data.getSettings().getSalary()));
-        mTaxRateInput   .setHint(getString(R.string.tax_rate_value, data.getSettings().getTaxRate()));
+        //Initialise EditText default values
+        mMapWidthInput    .setHint(getString(R.string.map_width_value, data.getSettings().getMapWidth()));
+        mMapHeightInput   .setHint(getString(R.string.map_height_value, data.getSettings().getMapHeight()));
+        mInitialMoneyInput.setHint(getString(R.string.initial_money_value, data.getSettings().getInitialMoney()));
+        mTaxRateInput     .setHint(getString(R.string.tax_rate_value, data.getSettings().getTaxRate()));
 
-        //Implementing callbacks / event handlers //FIXME doesn't work
-        mFamilySizeInput.addTextChangedListener(new TextWatcher() {
+        //Implementing callbacks / event handlers //TODO At end of project test this on all devices to ensure that you can't enter a negative number, because it isn't checked
+        mMapWidthInput.addTextChangedListener(new TextWatcher() { //TODO Use a generic method for to remove repeated integer code
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int value = Integer.parseInt(s.toString());
-                data.getSettings().setTaxRate(value);
-
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
             @Override
             public void afterTextChanged(Editable s) {
-
+                try {
+                    int value = Integer.parseInt(s.toString());
+                    data.getSettings().setMapWidth(value);
+                    mMapWidthInput.setHint(getString(R.string.map_width_value, value));
+                }
+                catch (NumberFormatException e) { //Show the user a simple error message
+                    mMapWidthInput.setError(getString(R.string.map_width_error));
+                }
             }
         });
-        mShopSizeInput.addTextChangedListener(new TextWatcher() {
+        mMapHeightInput.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int value = Integer.parseInt(s.toString());
-                data.getSettings().setTaxRate(value);
-
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
             @Override
             public void afterTextChanged(Editable s) {
-
+                try {
+                    int value = Integer.parseInt(s.toString());
+                    data.getSettings().setMapHeight(value);
+                    mMapHeightInput.setHint(getString(R.string.map_height_value, value));
+                }
+                catch (NumberFormatException e) { //Show the user a simple error message
+                    mMapHeightInput.setError(getString(R.string.map_height_error));
+                }
             }
         });
-        mSalaryInput.addTextChangedListener(new TextWatcher() {
+        mInitialMoneyInput.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int value = Integer.parseInt(s.toString());
-                data.getSettings().setTaxRate(value);
-
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
             @Override
             public void afterTextChanged(Editable s) {
-
+                try {
+                    int value = Integer.parseInt(s.toString());
+                    data.getSettings().setInitialMoney(value);
+                    mInitialMoneyInput.setHint(getString(R.string.initial_money_value, value));
+                }
+                catch (NumberFormatException e) { //Show the user a simple error message
+                    mInitialMoneyInput.setError(getString(R.string.initial_money_error));
+                }
             }
         });
         mTaxRateInput.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                double value = Double.parseDouble(s.toString());
-                data.getSettings().setTaxRate(value);
-
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
             @Override
             public void afterTextChanged(Editable s) {
-
+                try {
+                    double value = Double.parseDouble(s.toString());
+                    data.getSettings().setTaxRate(value);
+                    mTaxRateInput.setHint(getString(R.string.tax_rate_value, value));
+                }
+                catch (NumberFormatException e) { //Show the user a simple error message
+                    mTaxRateInput.setError(getString(R.string.tax_rate_error));
+                }
             }
         });
     }

@@ -37,7 +37,7 @@ public class MapData
         return instance;
     }
 
-    private static MapElement[][] generateGrid() //TODO modify to make plain, flat grass background
+    private static MapElement[][] generateGrid()
     {
         final int HEIGHT_RANGE = 256;
         final int WATER_LEVEL = 112;

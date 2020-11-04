@@ -11,15 +11,20 @@
     <string name="settings">Settings</string>
     <string name="default_button">Reset to Default</string>
 
-    <string name="family_size">Family Size</string>
-    <string name="shop_size">Shop Size</string>
-    <string name="salary">Salary</string>
+    <string name="map_width">Map Width</string>
+    <string name="map_height">Map Height</string>
+    <string name="initial_money">Initial Money</string>
     <string name="tax_rate">Tax Rate</string>
 
-    <string name="family_size_value">%d</string>
-    <string name="shop_size_value">%d</string>
-    <string name="salary_value">%d</string>
+    <string name="map_width_value">%d</string>
+    <string name="map_height_value">%d</string>
+    <string name="initial_money_value">%d</string>
     <string name="tax_rate_value">%.2f</string>
+
+    <string name="map_width_error">Map width must be a positive integer</string>
+    <string name="map_height_error">Map height must be a positive integer</string>
+    <string name="initial_money_error">Initial money must be a non-negative integer</string>
+    <string name="tax_rate_error">Tax rate must be a decimal number between 0.0 and 1.0</string>
 
 
     <!-- Game Screen -->
