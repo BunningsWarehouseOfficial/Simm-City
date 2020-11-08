@@ -28,4 +28,6 @@
 
 
     <!-- Game Screen -->
+    <string name="no_road_error">Buildings must be built adjacent to roads</string>
+    <string name="not_buildable_error">Buildings cannot be built over water</string>
 </resources>

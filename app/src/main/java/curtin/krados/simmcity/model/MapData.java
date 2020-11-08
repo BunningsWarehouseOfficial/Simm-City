@@ -113,7 +113,7 @@ public class MapData
                                     waterNW || waterNE || waterSW || waterSE;
 
                     grid[i][j] = new MapElement(
-                        !coast,
+                        true, //Changed from !coast
                         choose(waterN, waterW, waterNW,
                             R.drawable.ic_coast_north, R.drawable.ic_coast_west,
                             R.drawable.ic_coast_northwest, R.drawable.ic_coast_northwest_concave),

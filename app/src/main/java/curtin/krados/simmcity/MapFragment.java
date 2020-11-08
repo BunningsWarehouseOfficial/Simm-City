@@ -1,10 +1,12 @@
 package curtin.krados.simmcity;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import curtin.krados.simmcity.model.GameData;
 import curtin.krados.simmcity.model.MapData;
 import curtin.krados.simmcity.model.MapElement;
+import curtin.krados.simmcity.model.Road;
 import curtin.krados.simmcity.model.Structure;
 
 public class MapFragment extends Fragment {
@@ -27,7 +30,7 @@ public class MapFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return MapData.HEIGHT * MapData.WIDTH; //TODO check it's using current values from settings and not fixed constants
+            return MapData.HEIGHT * MapData.WIDTH;
         }
 
         @Override
@@ -93,14 +96,47 @@ public class MapFragment extends Fragment {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        int index, row, col;
+
+                        //Retrieving the position of the cell using the column-major order mapping
+                        index = getAdapterPosition();
+                        row = index % MapData.HEIGHT;
+                        col = index / MapData.HEIGHT;
                         Structure selected = GameData.get().getSelectedStructure();
 
-                        if (selected != null) { //TODO restrict to only building next to roads
-                            //Assign the new structure to the element
-                            mMapElement.setStructure(selected);
+                        //TODO check that the grid actually starts at top left
+                        //Check that the grid cell is one that can have structures built over it
+                        if (MapData.get().get(row, col).isBuildable()) {
+                            if (selected instanceof Road) {
+                                //Assign the new structure to the element
+                                mMapElement.setStructure(selected);
 
-                            //Update the adapter
-                            MapAdapter.this.notifyItemChanged(getAdapterPosition());
+                                //Update the adapter
+                                MapAdapter.this.notifyItemChanged(index);
+                            }
+                            else {
+                                //Check that there is a road adjacent to the desired build location
+                                if (roadCheck(row - 1, col) || roadCheck(row, col + 1) ||
+                                        roadCheck(row + 1, col) || roadCheck(row, col - 1)) {
+                                    if (selected != null) {
+                                        //Assign the new structure to the element
+                                        mMapElement.setStructure(selected);
+
+                                        //Update the adapter
+                                        MapAdapter.this.notifyItemChanged(index);
+                                    }
+                                }
+                                else {
+                                    Toast toast = Toast.makeText(getActivity(), R.string.no_road_error, Toast.LENGTH_SHORT);
+                                    toast.setGravity(Gravity.BOTTOM, 0, 250);
+                                    toast.show(); //TODO Test y offsets on other devices for consistency
+                                }
+                            }
+                        }
+                        else {
+                            Toast toast = Toast.makeText(getActivity(), R.string.not_buildable_error, Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.BOTTOM, 0, 250);
+                            toast.show();
                         }
                     }
                 });
@@ -128,5 +164,18 @@ public class MapFragment extends Fragment {
         mRv.setAdapter(adapter);
 
         return view;
+    }
+
+    //Private Methods
+    private boolean roadCheck(int row, int col) {
+        boolean isRoad = false;
+        //Check that the grid cell exists
+        if ((row >= 0 && row < MapData.HEIGHT) && (col >= 0 && col < MapData.WIDTH)) {
+            //Check that the grid cell has a road
+            if (MapData.get().get(row, col).getStructure() instanceof Road) { //TODO check for null pointer exceptions
+                isRoad = true;
+            }
+        }
+        return isRoad;
     }
 }

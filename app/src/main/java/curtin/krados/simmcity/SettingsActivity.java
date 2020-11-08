@@ -39,7 +39,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         //Implementing callbacks / event handlers //TODO At end of project test this on all devices to ensure that you can't enter a negative number, because it isn't checked
         mMapWidthInput.addTextChangedListener(new TextWatcher() { //TODO Use a generic method for to remove repeated integer code
-            @Override
+            @Override //TODO Test wacky map sizes and see how the map scales; should always fill screen
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
