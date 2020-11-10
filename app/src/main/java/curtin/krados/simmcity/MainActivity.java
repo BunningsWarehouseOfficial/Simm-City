@@ -42,3 +42,4 @@ public class MainActivity extends AppCompatActivity {
 //TODO Remove unused (grey) methods
 //TODO ContentDescriptions
 //TODO Remove redundant imports
+//FIXME Grid cells on map sometimes aren't connected properly with white half cross spaces between

@@ -1,6 +1,7 @@
 package curtin.krados.simmcity.model;
 
 public class Settings {
+    private String cityName = "Perth";
     private int mapWidth = 30; //TODO Changed from 50, which is required
     private int mapHeight = 10;
     private int initialMoney = 1000;
@@ -14,11 +15,12 @@ public class Settings {
     private int roadBuildingCost = 20;
 
     //Constructor
-    public Settings() {
-
-    }
+    public Settings() { }
 
     //Accessors //TODO remove unused methods
+    public String getCityName() {
+        return cityName;
+    }
     public int getMapWidth() {
         return mapWidth;
     }
@@ -54,6 +56,9 @@ public class Settings {
     }
 
     //Mutators
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
     public void setMapWidth(int mapWidth) {
         this.mapWidth = mapWidth;
     }

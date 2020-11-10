@@ -1,7 +1,6 @@
 <resources>
     <!-- Title Screen -->
     <string name="app_name">Simm City</string>
-    <string name="title">Simm City</string>
     <string name="author">By Kristian Radoš</string>
     <string name="start_button">Start Game</string>
     <string name="settings_button">Settings</string>
@@ -11,6 +10,7 @@
     <string name="settings">Settings</string>
     <string name="default_button">Reset to Default</string>
 
+    <string name="city_name">City Name: </string>
     <string name="map_width">Map Width</string>
     <string name="map_height">Map Height</string>
     <string name="initial_money">Initial Money</string>
@@ -21,6 +21,7 @@
     <string name="initial_money_value">%d</string>
     <string name="tax_rate_value">%.2f</string>
 
+    <string name="city_name_error">Must enter a city name</string>
     <string name="map_width_error">Map width must be a positive integer</string>
     <string name="map_height_error">Map height must be a positive integer</string>
     <string name="initial_money_error">Initial money must be a non-negative integer</string>
@@ -28,6 +29,15 @@
 
 
     <!-- Game Screen -->
+    <string name="population">Population: %d</string>
+    <string name="money">Treasury: $%d</string>
+    <string name="day">Day %d</string>
+    <string name="next_day_button">Next Day</string>
+    <string name="last_income">Yesterday: %c$%d</string>
+    <string name="employment">%d%% Employment</string>
+    <string name="employment_undefined">No people to employ!</string>
+    <string name="temperature">%d°C</string>
+
     <string name="no_road_error">Buildings must be built adjacent to roads</string>
     <string name="not_buildable_error">Buildings cannot be built over water</string>
 </resources>

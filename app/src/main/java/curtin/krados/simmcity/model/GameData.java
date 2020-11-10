@@ -1,5 +1,7 @@
 package curtin.krados.simmcity.model;
 
+import androidx.lifecycle.MutableLiveData;
+
 public class GameData {
     //Singleton
     private static GameData sInstance;
@@ -13,9 +15,9 @@ public class GameData {
     //TODO constants
 
     private Settings mSettings;
-    //private MapElement[][] map; //TODO MapData here?
     private int mMoney;
-    private int mGameTime = 0; //TODO check if it should = 0
+    private int mGameTime = 0;
+    private int mPopulation = 0;
     private Structure mSelectedStructure;
     private int mPreviousStructureIndex;
 

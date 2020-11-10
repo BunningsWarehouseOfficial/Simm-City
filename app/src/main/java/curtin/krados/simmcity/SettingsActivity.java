@@ -14,6 +14,7 @@ import curtin.krados.simmcity.model.GameData;
 public class SettingsActivity extends AppCompatActivity {
     private GameData data;
 
+    private EditText mCityNameInput;
     private EditText mMapWidthInput;
     private EditText mMapHeightInput;
     private EditText mInitialMoneyInput;
@@ -26,18 +27,37 @@ public class SettingsActivity extends AppCompatActivity {
         data = GameData.get();
 
         //Retrieving references
+        mCityNameInput     = (EditText) findViewById(R.id.cityNameInput);
         mMapWidthInput     = (EditText) findViewById(R.id.mapWidthInput);
         mMapHeightInput    = (EditText) findViewById(R.id.mapHeightInput);
         mInitialMoneyInput = (EditText) findViewById(R.id.initialMoneyInput);
         mTaxRateInput      = (EditText) findViewById(R.id.taxRateInput);
 
         //Initialise EditText default values
+        mCityNameInput    .setHint(data.getSettings().getCityName());
         mMapWidthInput    .setHint(getString(R.string.map_width_value, data.getSettings().getMapWidth()));
         mMapHeightInput   .setHint(getString(R.string.map_height_value, data.getSettings().getMapHeight()));
         mInitialMoneyInput.setHint(getString(R.string.initial_money_value, data.getSettings().getInitialMoney()));
         mTaxRateInput     .setHint(getString(R.string.tax_rate_value, data.getSettings().getTaxRate()));
 
         //Implementing callbacks / event handlers //TODO At end of project test this on all devices to ensure that you can't enter a negative number, because it isn't checked
+        mCityNameInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            @Override
+            public void afterTextChanged(Editable s) {
+                try {
+                    String value = s.toString();
+                    data.getSettings().setCityName(value);
+                    mMapHeightInput.setHint(value);
+                }
+                catch (NumberFormatException e) { //Show the user a simple error message
+                    mMapHeightInput.setError(getString(R.string.city_name_error));
+                }
+            }
+        });
         mMapWidthInput.addTextChangedListener(new TextWatcher() { //TODO Use a generic method for to remove repeated integer code
             @Override //TODO Test wacky map sizes and see how the map scales; should always fill screen
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -106,7 +126,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         });
-    }
+    } //TODO Default button
 
     //Decoupling method for starting the activity
     public static Intent getIntent(Context c) {

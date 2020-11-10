@@ -108,8 +108,9 @@ public class MapFragment extends Fragment {
                         //Check that the grid cell is one that can have structures built over it
                         if (MapData.get().get(row, col).isBuildable()) {
                             if (selected instanceof Road) {
-                                //Assign the new structure to the element
+                                //Assign the new road structure to the element
                                 mMapElement.setStructure(selected);
+                                //TODO Update GameData and status bar (money)
 
                                 //Update the adapter
                                 MapAdapter.this.notifyItemChanged(index);
@@ -121,6 +122,7 @@ public class MapFragment extends Fragment {
                                     if (selected != null) {
                                         //Assign the new structure to the element
                                         mMapElement.setStructure(selected);
+                                        //TODO Update GameData and status bar (money, population, employment)
 
                                         //Update the adapter
                                         MapAdapter.this.notifyItemChanged(index);
