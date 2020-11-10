@@ -43,3 +43,4 @@ public class MainActivity extends AppCompatActivity {
 //TODO ContentDescriptions
 //TODO Remove redundant imports
 //FIXME Grid cells on map sometimes aren't connected properly with white half cross spaces between
+//TODO Some function for resetting the game/database/map

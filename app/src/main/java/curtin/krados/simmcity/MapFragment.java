@@ -104,41 +104,18 @@ public class MapFragment extends Fragment {
                         col = index / MapData.HEIGHT;
                         Structure selected = GameData.get().getSelectedStructure();
 
-                        //TODO check that the grid actually starts at top left
-                        //Check that the grid cell is one that can have structures built over it
-                        if (MapData.get().get(row, col).isBuildable()) {
-                            if (selected instanceof Road) {
-                                //Assign the new road structure to the element
-                                mMapElement.setStructure(selected);
-                                //TODO Update GameData and status bar (money)
+                        if (selected != null) {
+                            try {
+                                mMapElement.setStructure(selected, row, col, getContext());
 
                                 //Update the adapter
                                 MapAdapter.this.notifyItemChanged(index);
                             }
-                            else {
-                                //Check that there is a road adjacent to the desired build location
-                                if (roadCheck(row - 1, col) || roadCheck(row, col + 1) ||
-                                        roadCheck(row + 1, col) || roadCheck(row, col - 1)) {
-                                    if (selected != null) {
-                                        //Assign the new structure to the element
-                                        mMapElement.setStructure(selected);
-                                        //TODO Update GameData and status bar (money, population, employment)
-
-                                        //Update the adapter
-                                        MapAdapter.this.notifyItemChanged(index);
-                                    }
-                                }
-                                else {
-                                    Toast toast = Toast.makeText(getActivity(), R.string.no_road_error, Toast.LENGTH_SHORT);
-                                    toast.setGravity(Gravity.BOTTOM, 0, 250);
-                                    toast.show(); //TODO Test y offsets on other devices for consistency
-                                }
+                            catch (BuildStructureException e) {
+                                Toast toast = Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT);
+                                toast.setGravity(Gravity.BOTTOM, 0, 250);
+                                toast.show(); //TODO Test y offsets on other devices for consistency
                             }
-                        }
-                        else {
-                            Toast toast = Toast.makeText(getActivity(), R.string.not_buildable_error, Toast.LENGTH_SHORT);
-                            toast.setGravity(Gravity.BOTTOM, 0, 250);
-                            toast.show();
                         }
                     }
                 });
@@ -166,18 +143,5 @@ public class MapFragment extends Fragment {
         mRv.setAdapter(adapter);
 
         return view;
-    }
-
-    //Private Methods
-    private boolean roadCheck(int row, int col) {
-        boolean isRoad = false;
-        //Check that the grid cell exists
-        if ((row >= 0 && row < MapData.HEIGHT) && (col >= 0 && col < MapData.WIDTH)) {
-            //Check that the grid cell has a road
-            if (MapData.get().get(row, col).getStructure() instanceof Road) { //TODO check for null pointer exceptions
-                isRoad = true;
-            }
-        }
-        return isRoad;
     }
 }

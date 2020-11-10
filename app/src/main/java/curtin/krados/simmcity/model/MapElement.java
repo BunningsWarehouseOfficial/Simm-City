@@ -1,6 +1,10 @@
 package curtin.krados.simmcity.model;
 
-import curtin.krados.simmcity.model.Structure;
+import android.content.Context;
+
+import curtin.krados.simmcity.BuildStructureException;
+import curtin.krados.simmcity.MapFragment;
+import curtin.krados.simmcity.R;
 
 /**
  * Represents a single grid square in the map. Each map element has both terrain and an optional
@@ -79,8 +83,41 @@ public class MapElement
     }
 
     //Mutators
-    public void setStructure(Structure structure)
+    public void setStructure(Structure structure, int row, int col, Context context) throws BuildStructureException
     {
-        this.structure = structure;
+        //Check that the grid cell is one that can have structures built over it
+        if (buildable) {
+            if (structure instanceof Road) {
+                this.structure = structure;
+                //TODO Update money
+            }
+            else {
+                //Check that there is a road adjacent to the desired build location
+                if (roadCheck(row - 1, col) || roadCheck(row, col + 1) ||
+                        roadCheck(row + 1, col) || roadCheck(row, col - 1)) {
+                    this.structure = structure;
+                    //TODO Update nRes/nCom, money, population (which will automatically update employment)
+                }
+                else {
+                    throw new BuildStructureException(context.getString(R.string.no_road_error));
+                }
+            }
+        }
+        else {
+            throw new BuildStructureException(context.getString(R.string.not_buildable_error));
+        }
+    }
+
+    //Private Methods
+    private boolean roadCheck(int row, int col) {
+        boolean isRoad = false;
+        //Check that the grid cell exists
+        if ((row >= 0 && row < MapData.HEIGHT) && (col >= 0 && col < MapData.WIDTH)) {
+            //Check that the grid cell has a road
+            if (MapData.get().get(row, col).getStructure() instanceof Road) {
+                isRoad = true;
+            }
+        }
+        return isRoad;
     }
 }
