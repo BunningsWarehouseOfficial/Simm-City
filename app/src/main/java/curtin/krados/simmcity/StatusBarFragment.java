@@ -1,5 +1,6 @@
 package curtin.krados.simmcity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +46,23 @@ public class StatusBarFragment extends Fragment {
         mTemperatureText.setText(getString(R.string.temperature, 25)); //TODO Retrieve actual temperature if applicable, some other value if not
         mMoneyText      .setText(getString(R.string.money, data.getSettings().getInitialMoney()));
         mLastIncomeText .setText(getString(R.string.last_income, '+', 0));
-        mEmploymentText .setText(getString(R.string.employment_undefined)); //TODO Check for undefined value on pop. updated as well, like demolishing residential
+        mEmploymentText .setText(getString(R.string.employment_undefined));
+
+        //Implementing callbacks / event handlers
+        mNextDayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GameData data = GameData.get();
+                int lastIncome = data.nextDay();
+                if (lastIncome >= 0) {
+                    mLastIncomeText.setText(getString(R.string.last_income, '+', lastIncome));
+                }
+                else {
+                    mLastIncomeText.setText(getString(R.string.last_income, '-', Math.abs(lastIncome)));
+                }
+                mDayText.setText(getString(R.string.day, data.getGameTime()));
+            } //TODO Lose condition at $0
+        });
 
         //Setting up listeners to update the UI when a layout parameter changes
         data.getMoney().observe(getViewLifecycleOwner(), new Observer<Integer>() {
@@ -60,18 +77,19 @@ public class StatusBarFragment extends Fragment {
             @Override
             public void onChanged(Integer isVertical) {
                 GameData data = GameData.get();
-
-                //Recalculate and update population and employment rate
                 int nResidential = data.getNumResidential().getValue();
                 int population = data.getSettings().getFamilySize() * nResidential;
                 data.setPopulation(population);
-                if (population > 0) {
-                    int nCommercial = data.getNumCommercial().getValue();
-                    int shopSize = data.getSettings().getShopSize();
-                    double employment = Math.min(1.0, (double)nCommercial * (double)shopSize / (double)population);
+
+                //Recalculate and update employment rate
+                try {
+                    double employment = data.getEmploymentRate();
                     //Convert double value to percentage with 1 decimal place
                     double employmentPercent = Math.round(employment * 1000.0) / 10.0;
                     mEmploymentText.setText(getString(R.string.employment, employmentPercent));
+                }
+                catch (ArithmeticException e) {
+                    mEmploymentText.setText(getString(R.string.employment_undefined));
                 }
                 mPopulationText.setText(getString(R.string.population, population));
             }
@@ -80,18 +98,14 @@ public class StatusBarFragment extends Fragment {
             @Override
             public void onChanged(Integer isVertical) {
                 GameData data = GameData.get();
-
                 //Recalculate and update employment rate
-                int nCommercial = data.getNumCommercial().getValue();
-                int population = data.getPopulation();
-                if (population > 0) {
-                    int shopSize = data.getSettings().getShopSize();
-                    double employment = Math.min(1.0, (double)nCommercial * (double)shopSize / (double)population);
+                try {
+                    double employment = data.getEmploymentRate();
                     //Convert double value to percentage with 1 decimal place
                     double employmentPercent = Math.round(employment * 1000.0) / 10.0;
                     mEmploymentText.setText(getString(R.string.employment, employmentPercent));
                 }
-                else {
+                catch (ArithmeticException e) {
                     mEmploymentText.setText(getString(R.string.employment_undefined));
                 }
             }
