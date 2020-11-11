@@ -84,7 +84,7 @@ public class MapFragment extends Fragment {
                 mSouthWestImage.setImageResource(mapElement.getSouthWest());
                 Structure elementStructure = mapElement.getStructure();
                 if (elementStructure != null) {
-                    mStructureImage.setVisibility(View.VISIBLE); //TODO is visibility thing needed?
+                    mStructureImage.setVisibility(View.VISIBLE);
                     mStructureImage.setImageResource(elementStructure.getDrawableId());
                 }
                 else {

@@ -6,8 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import curtin.krados.simmcity.model.GameData;
 
@@ -44,6 +46,56 @@ public class StatusBarFragment extends Fragment {
         mMoneyText      .setText(getString(R.string.money, data.getSettings().getInitialMoney()));
         mLastIncomeText .setText(getString(R.string.last_income, '+', 0));
         mEmploymentText .setText(getString(R.string.employment_undefined)); //TODO Check for undefined value on pop. updated as well, like demolishing residential
+
+        //Setting up listeners to update the UI when a layout parameter changes
+        data.getMoney().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer isVertical) {
+                GameData data = GameData.get();
+                int money = data.getMoney().getValue();
+                mMoneyText.setText(getString(R.string.money, money));
+            }
+        });
+        data.getNumResidential().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer isVertical) {
+                GameData data = GameData.get();
+
+                //Recalculate and update population and employment rate
+                int nResidential = data.getNumResidential().getValue();
+                int population = data.getSettings().getFamilySize() * nResidential;
+                data.setPopulation(population);
+                if (population > 0) {
+                    int nCommercial = data.getNumCommercial().getValue();
+                    int shopSize = data.getSettings().getShopSize();
+                    double employment = Math.min(1.0, (double)nCommercial * (double)shopSize / (double)population);
+                    //Convert double value to percentage with 1 decimal place
+                    double employmentPercent = Math.round(employment * 1000.0) / 10.0;
+                    mEmploymentText.setText(getString(R.string.employment, employmentPercent));
+                }
+                mPopulationText.setText(getString(R.string.population, population));
+            }
+        });
+        data.getNumCommercial().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer isVertical) {
+                GameData data = GameData.get();
+
+                //Recalculate and update employment rate
+                int nCommercial = data.getNumCommercial().getValue();
+                int population = data.getPopulation();
+                if (population > 0) {
+                    int shopSize = data.getSettings().getShopSize();
+                    double employment = Math.min(1.0, (double)nCommercial * (double)shopSize / (double)population);
+                    //Convert double value to percentage with 1 decimal place
+                    double employmentPercent = Math.round(employment * 1000.0) / 10.0;
+                    mEmploymentText.setText(getString(R.string.employment, employmentPercent));
+                }
+                else {
+                    mEmploymentText.setText(getString(R.string.employment_undefined));
+                }
+            }
+        });
 
         return view;
     }

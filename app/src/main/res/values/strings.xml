@@ -1,7 +1,7 @@
 <resources>
     <!-- Title Screen -->
     <string name="app_name">Simm City</string>
-    <string name="author">By Kristian Radoš</string>
+    <string name="author">By Kristian Rados</string>
     <string name="start_button">Start Game</string>
     <string name="settings_button">Settings</string>
 
@@ -34,10 +34,11 @@
     <string name="day">Day %d</string>
     <string name="next_day_button">Next Day</string>
     <string name="last_income">Yesterday: %c$%d</string>
-    <string name="employment">%d%% Employment</string>
+    <string name="employment">%.1f%% Employment</string>
     <string name="employment_undefined">No people to employ!</string>
     <string name="temperature">%d°C</string>
 
+    <string name="not_enough_money_error">You do not have enough money to build that</string>
     <string name="no_road_error">Buildings must be built adjacent to roads</string>
     <string name="not_buildable_error">Buildings cannot be built over water</string>
 </resources>

@@ -3,7 +3,6 @@ package curtin.krados.simmcity.model;
 import android.content.Context;
 
 import curtin.krados.simmcity.BuildStructureException;
-import curtin.krados.simmcity.MapFragment;
 import curtin.krados.simmcity.R;
 
 /**
@@ -87,16 +86,18 @@ public class MapElement
     {
         //Check that the grid cell is one that can have structures built over it
         if (buildable) {
+            GameData data = GameData.get();
+
             if (structure instanceof Road) {
                 this.structure = structure;
-                //TODO Update money
+                structure.build(context); //Update game values
             }
             else {
                 //Check that there is a road adjacent to the desired build location
                 if (roadCheck(row - 1, col) || roadCheck(row, col + 1) ||
                         roadCheck(row + 1, col) || roadCheck(row, col - 1)) {
                     this.structure = structure;
-                    //TODO Update nRes/nCom, money, population (which will automatically update employment)
+                    structure.build(context); //Update game values
                 }
                 else {
                     throw new BuildStructureException(context.getString(R.string.no_road_error));
