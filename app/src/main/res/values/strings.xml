@@ -46,4 +46,6 @@
     <string name="not_enough_money_error">You need more money to build that</string>
     <string name="no_road_error">Buildings must be built adjacent to roads</string>
     <string name="not_buildable_error">Buildings cannot be built over water</string>
+
+    <string name="game_over">You ran out of money!\nGAME OVER</string>
 </resources>

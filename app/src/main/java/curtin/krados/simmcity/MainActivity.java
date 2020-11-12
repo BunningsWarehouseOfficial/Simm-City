@@ -45,5 +45,5 @@ public class MainActivity extends AppCompatActivity {
 //TODO Remove unused (grey) methods
 //TODO ContentDescriptions
 //TODO Remove redundant imports
-//TODO Remove all invasive purple header from app
 //TODO Add JavaDocs class and method headers (especially the latter)
+//TODO Green and red yesterday income text for just the monetary value

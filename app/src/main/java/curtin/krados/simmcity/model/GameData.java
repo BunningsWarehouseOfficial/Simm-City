@@ -27,6 +27,7 @@ public class GameData {
     private int mPreviousStructureIndex;
     private boolean mDetailChecking = false;
     private boolean mDemolishing = false;
+    private boolean mGameOver = false;
 
     //Constructor
     private GameData() {
@@ -69,6 +70,9 @@ public class GameData {
     public boolean isDemolishing() {
         return mDemolishing;
     }
+    public boolean isGameOver() {
+        return mGameOver;
+    }
 
     public double getEmploymentRate() throws ArithmeticException {
         if (mPopulation > 0) {
@@ -108,6 +112,9 @@ public class GameData {
     }
     public void setDemolishing(boolean demolishing) {
         mDemolishing = demolishing;
+    }
+    public void setGameOver(boolean gameOver) {
+        mGameOver = gameOver;
     }
 
     public int nextDay() throws ArithmeticException {
