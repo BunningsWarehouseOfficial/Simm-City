@@ -3,12 +3,18 @@ package curtin.krados.simmcity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import curtin.krados.simmcity.model.GameData;
+import curtin.krados.simmcity.model.MapData;
 
 public class MainActivity extends AppCompatActivity {
     private Button mStartButton;
+    private Button mRestartButton;
     private Button mSettingsButton;
 
     @Override
@@ -17,24 +23,67 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Retrieving references
-        mStartButton    = (Button) findViewById(R.id.startButton);
-        mSettingsButton = (Button) findViewById(R.id.settingsButton);
+        mStartButton    = findViewById(R.id.startButton);
+        mRestartButton  = findViewById(R.id.restartButton);
+        mSettingsButton = findViewById(R.id.settingsButton);
 
         //Implementing callbacks / event handlers
         mStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                GameData.get().setGameStarted(true);
                 Intent intent = GameActivity.getIntent(MainActivity.this);
                 startActivity(intent);
+            }
+        });
+        mRestartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GameData.get().setGameStarted(false);
+                GameData.recreate();
+                MapData.get().regenerate();
+                update();
             }
         });
         mSettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = SettingsActivity.getIntent(MainActivity.this);
-                startActivity(intent); //TODO Block entering settings screen if there is a running game
+                GameData data = GameData.get();
+                if (data.isGameStarted()) { //FIXME remove if not needed
+                    Toast.makeText(MainActivity.this, getString(R.string.settings_error), Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Intent intent = SettingsActivity.getIntent(MainActivity.this);
+                    startActivity(intent);
+                }
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        update();
+    }
+
+    //Private Methods
+    private void update() {
+        if (GameData.get().isGameStarted()) {
+            //Set start button to resume
+            mStartButton.setText(getString(R.string.resume_button));
+            //Show restart button
+            mRestartButton.setVisibility(View.VISIBLE);
+            //Disable settings menu
+            mSettingsButton.setEnabled(false);
+        }
+        else {
+            //Set start button to start new game
+            mStartButton.setText(getString(R.string.start_button));
+            //Hide restart button
+            mRestartButton.setVisibility(View.GONE);
+            //Enable settings menu
+            mSettingsButton.setEnabled(true);
+        }
     }
 }
 
@@ -46,4 +95,5 @@ public class MainActivity extends AppCompatActivity {
 //TODO ContentDescriptions
 //TODO Remove redundant imports
 //TODO Add JavaDocs class and method headers (especially the latter)
+//TODO Center the text in toasts (particularly game over toast)
 //TODO Green and red yesterday income text for just the monetary value

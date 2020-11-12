@@ -48,6 +48,9 @@ public class StatusBarFragment extends Fragment {
         mMoneyText      .setText(getString(R.string.money, data.getSettings().getInitialMoney()));
         mLastIncomeText .setText(getString(R.string.last_income, '+', 0));
         mEmploymentText .setText(getString(R.string.employment_undefined));
+        if (data.isGameOver()) {
+            mMoneyText.setTextColor(Color.parseColor("#EF3833"));
+        }
 
         //Implementing callbacks / event handlers
         mNextDayButton.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +79,7 @@ public class StatusBarFragment extends Fragment {
                 if (money < 0 && !data.isGameOver()) {
                     data.setGameOver(true);
                     mMoneyText.setTextColor(Color.parseColor("#EF3833"));
+
                     Toast toast = Toast.makeText(getActivity(), getString(R.string.game_over), Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();

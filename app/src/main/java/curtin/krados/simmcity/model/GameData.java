@@ -1,11 +1,7 @@
 package curtin.krados.simmcity.model;
 
-import android.content.Context;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
-import curtin.krados.simmcity.R;
 
 public class GameData {
     //Singleton
@@ -16,6 +12,10 @@ public class GameData {
         }
         return sInstance;
     }
+    public static GameData recreate() {
+        sInstance = new GameData();
+        return sInstance;
+    }
 
     private Settings mSettings;
     private int mGameTime = 0;
@@ -23,11 +23,13 @@ public class GameData {
     private int mPopulation = 0;
     private MutableLiveData<Integer> mNumResidential;
     private MutableLiveData<Integer> mNumCommercial;
+
+    private boolean mGameStarted    = false;
     private Structure mSelectedStructure;
     private int mPreviousStructureIndex;
     private boolean mDetailChecking = false;
-    private boolean mDemolishing = false;
-    private boolean mGameOver = false;
+    private boolean mDemolishing    = false;
+    private boolean mGameOver       = false;
 
     //Constructor
     private GameData() {
@@ -57,6 +59,10 @@ public class GameData {
     }
     public LiveData<Integer> getNumCommercial() {
         return mNumCommercial;
+    }
+
+    public boolean isGameStarted() {
+        return mGameStarted;
     }
     public Structure getSelectedStructure() {
         return mSelectedStructure;
@@ -100,6 +106,10 @@ public class GameData {
     }
     public void setNumCommercial(int numCommercial) {
         mNumCommercial.setValue(numCommercial);
+    }
+
+    public void setGameStarted(boolean gameStarted) {
+        mGameStarted = gameStarted;
     }
     public void setSelectedStructure(Structure selectedStructure) {
         mSelectedStructure = selectedStructure;
