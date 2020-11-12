@@ -74,7 +74,7 @@ public class StatusBarFragment extends Fragment {
                     mLastIncomeText.setText(getString(R.string.last_income, '-', Math.abs(lastIncome)));
                 }
                 mDayText.setText(getString(R.string.day, data.getGameTime()));
-            } //TODO Lose condition at $0
+            }
         });
 
         //Setting up listeners to update the UI and GameData when layout parameters change

@@ -95,12 +95,8 @@ public class MapFragment extends Fragment {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        int index, row, col;
+                        int index = getAdapterPosition();
 
-                        //Retrieving the position of the cell using the column-major order mapping
-                        index = getAdapterPosition();
-                        row = index % MapData.HEIGHT;
-                        col = index / MapData.HEIGHT;
                         GameData data = GameData.get();
                         Structure selected = data.getSelectedStructure();
 
@@ -108,15 +104,18 @@ public class MapFragment extends Fragment {
                             if (selected != null) {
                                 //Build new structure
                                 if (!data.isDetailChecking() && !data.isDemolishing()) {
-                                    mMapElement.buildStructure(selected, row, col, getContext());
+                                    mMapElement.buildStructure(selected, getContext());
                                 }
                                 //Check the details on a structure
                                 else if (data.isDetailChecking()) {
-                                    //TODO Details screen
+                                    if (mMapElement.getStructure() != null) {
+                                        data.setDetailsElement(mMapElement);
+                                        ((GameActivity) getActivity()).swapToDetails();
+                                    }
                                 }
                                 //Demolish a structure
                                 else if (data.isDemolishing()) {
-                                    mMapElement.removeStructure(row, col, getContext());
+                                    mMapElement.removeStructure(getContext());
 
                                     mStructureImage.setVisibility(View.INVISIBLE);
                                 }

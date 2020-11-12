@@ -38,17 +38,21 @@ public class MapElement
     private final int mTerrainNorthEast;
     private final int mTerrainSouthEast;
     private Structure mStructure;
+    private int mRow;
+    private int mCol;
 
     //Constructor
     public MapElement(boolean buildable, int northWest, int northEast,
-                      int southWest, int southEast, Structure structure)
+                      int southWest, int southEast, Structure structure, int row, int col)
     {
-        this.mBuildable = buildable;
-        this.mTerrainNorthWest = northWest;
-        this.mTerrainNorthEast = northEast;
-        this.mTerrainSouthWest = southWest;
-        this.mTerrainSouthEast = southEast;
-        this.mStructure = structure;
+        mBuildable = buildable;
+        mTerrainNorthWest = northWest;
+        mTerrainNorthEast = northEast;
+        mTerrainSouthWest = southWest;
+        mTerrainSouthEast = southEast;
+        mStructure = structure;
+        mRow = row;
+        mCol = col;
     }
 
     //Accessors
@@ -80,9 +84,15 @@ public class MapElement
     {
         return mStructure;
     }
+    public int getRow() {
+        return mRow;
+    }
+    public int getCol() {
+        return mCol;
+    }
 
     //Mutators
-    public void buildStructure(Structure structure, int row, int col, Context context) throws StructureException
+    public void buildStructure(Structure structure, Context context) throws StructureException
     {
         //Check if there is already a structure at this location
         if (mStructure != null) {
@@ -99,8 +109,8 @@ public class MapElement
             }
             else {
                 //Check that there is a road adjacent to the desired build location
-                if (roadCheck(row - 1, col) || roadCheck(row, col + 1) ||
-                        roadCheck(row + 1, col) || roadCheck(row, col - 1)) {
+                if (roadCheck(mRow - 1, mCol) || roadCheck(mRow, mCol + 1) ||
+                        roadCheck(mRow + 1, mCol) || roadCheck(mRow, mCol - 1)) {
                     structure.build(context); //Update game values
                     mStructure = structure;
                 }
@@ -113,11 +123,11 @@ public class MapElement
             throw new StructureException(context.getString(R.string.not_buildable_error));
         }
     }
-    public void removeStructure(int row, int col, Context context) throws StructureException {
+    public void removeStructure(Context context) throws StructureException {
         if (mStructure instanceof Road) {
             //Check if there are any adjacent non-road structures
-            if (buildingCheck(row - 1, col) || buildingCheck(row, col + 1) ||
-                    buildingCheck(row + 1, col) || buildingCheck(row, col - 1)) {
+            if (buildingCheck(mRow - 1, mCol) || buildingCheck(mRow, mCol + 1) ||
+                    buildingCheck(mRow + 1, mCol) || buildingCheck(mRow, mCol - 1)) {
                 throw new StructureException(context.getString(R.string.cannot_demolish_road_error));
             }
             else {

@@ -11,6 +11,12 @@ public class Residential extends Structure {
         super(drawableId, label);
     }
 
+    //Accessors
+    @Override
+    public String getString() {
+        return "Residential";
+    }
+
     //Mutators
     @Override
     public void build(Context context) throws StructureException {

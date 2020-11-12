@@ -11,6 +11,12 @@ public class Road extends Structure {
         super(drawableId, label);
     }
 
+    //Accessors
+    @Override
+    public String getString() {
+        return "Road";
+    }
+
     //Mutators
     @Override
     public void build(Context context) throws StructureException {

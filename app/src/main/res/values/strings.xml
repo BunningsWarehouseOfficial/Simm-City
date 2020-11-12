@@ -15,7 +15,7 @@
     <string name="settings">Settings</string>
     <string name="default_button">Reset to Default</string>
 
-    <string name="city_name">City Name: </string>
+    <string name="city_name">City Name </string>
     <string name="map_width">Map Width</string>
     <string name="map_height">Map Height</string>
     <string name="initial_money">Initial Money</string>
@@ -53,4 +53,18 @@
     <string name="not_buildable_error">Buildings cannot be built over water</string>
 
     <string name="game_over">You ran out of money!\nGAME OVER</string>
+
+
+    <!-- Details Screen -->
+    <string name="structure_name">Name</string>
+    <string name="coordinates">Coordinates</string>
+
+    <string name="road">Road</string>
+    <string name="residential">Residential</string>
+    <string name="commercial">Commercial</string>
+    <string name="coordinates_value">Row %d, Col %d</string>
+    <string name="structure_name_error">Must enter a structure name</string>
+
+    <string name="thumbnail_button">Take Thumbnail</string>
+    <string name="back_button">Back</string>
 </resources>

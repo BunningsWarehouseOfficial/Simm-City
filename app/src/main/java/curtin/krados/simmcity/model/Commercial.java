@@ -11,6 +11,12 @@ public class Commercial extends Structure {
         super(drawableId, label);
     }
 
+    //Accessors
+    @Override
+    public String getString() {
+        return "Commercial";
+    }
+
     //Mutators
     @Override
     public void build(Context context) throws StructureException {

@@ -29,8 +29,12 @@ public abstract class Structure
     {
         return label;
     }
+    abstract public String getString();
 
     //Mutators
+    public void setLabel(String label) {
+        this.label = label;
+    }
     abstract public void build(Context context) throws StructureException;
     abstract public void demolish();
 }

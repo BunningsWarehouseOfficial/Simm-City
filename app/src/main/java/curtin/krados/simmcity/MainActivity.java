@@ -97,3 +97,6 @@ public class MainActivity extends AppCompatActivity {
 //TODO Add JavaDocs class and method headers (especially the latter)
 //TODO Center the text in toasts (particularly game over toast)
 //TODO Green and red yesterday income text for just the monetary value
+//TODO Show image of structure/thumbnail in details screen
+//  Always show original structure up top and show thumbnail at bottom if there is one
+//  Have bottom at very bottom below thumbnail to remove thumbnail

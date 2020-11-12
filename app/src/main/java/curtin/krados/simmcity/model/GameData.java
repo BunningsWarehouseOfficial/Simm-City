@@ -30,6 +30,7 @@ public class GameData {
     private boolean mDetailChecking = false;
     private boolean mDemolishing    = false;
     private boolean mGameOver       = false;
+    private MapElement mDetailsElement;
 
     //Constructor
     private GameData() {
@@ -79,6 +80,9 @@ public class GameData {
     public boolean isGameOver() {
         return mGameOver;
     }
+    public MapElement getDetailsElement() {
+        return mDetailsElement;
+    }
 
     public double getEmploymentRate() throws ArithmeticException {
         if (mPopulation > 0) {
@@ -125,6 +129,9 @@ public class GameData {
     }
     public void setGameOver(boolean gameOver) {
         mGameOver = gameOver;
+    }
+    public void setDetailsElement(MapElement detailsElement) {
+        mDetailsElement = detailsElement;
     }
 
     public int nextDay() throws ArithmeticException {
