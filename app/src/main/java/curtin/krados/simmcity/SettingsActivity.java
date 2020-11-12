@@ -27,11 +27,11 @@ public class SettingsActivity extends AppCompatActivity {
         data = GameData.get();
 
         //Retrieving references
-        mCityNameInput     = (EditText) findViewById(R.id.cityNameInput);
-        mMapWidthInput     = (EditText) findViewById(R.id.mapWidthInput);
-        mMapHeightInput    = (EditText) findViewById(R.id.mapHeightInput);
-        mInitialMoneyInput = (EditText) findViewById(R.id.initialMoneyInput);
-        mTaxRateInput      = (EditText) findViewById(R.id.taxRateInput);
+        mCityNameInput     = findViewById(R.id.cityNameInput);
+        mMapWidthInput     = findViewById(R.id.mapWidthInput);
+        mMapHeightInput    = findViewById(R.id.mapHeightInput);
+        mInitialMoneyInput = findViewById(R.id.initialMoneyInput);
+        mTaxRateInput      = findViewById(R.id.taxRateInput);
 
         //Initialise EditText default values
         mCityNameInput    .setHint(data.getSettings().getCityName());
@@ -48,13 +48,13 @@ public class SettingsActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
             @Override
             public void afterTextChanged(Editable s) {
-                try {
-                    String value = s.toString();
-                    data.getSettings().setCityName(value);
-                    mMapHeightInput.setHint(value);
+                String value = s.toString();
+                if (value.equals("")) { //Show the user a simple error message
+                    mCityNameInput.setError(getString(R.string.city_name_error));
                 }
-                catch (NumberFormatException e) { //Show the user a simple error message
-                    mMapHeightInput.setError(getString(R.string.city_name_error));
+                else {
+                    data.getSettings().setCityName(value);
+                    mCityNameInput.setHint(value);
                 }
             }
         });
