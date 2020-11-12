@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
 //FIXME Grid cells on map sometimes aren't connected properly with white half cross spaces between
 //TODO Some function for resetting the game/database/map
+//TODO Implement OwnerName
 
 //TODO Remove unused (grey) methods
 //TODO ContentDescriptions
