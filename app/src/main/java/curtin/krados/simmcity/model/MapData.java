@@ -3,6 +3,7 @@ package curtin.krados.simmcity.model;
 import java.util.Random;
 
 import curtin.krados.simmcity.R;
+import curtin.krados.simmcity.model.GameData.GameData;
 
 /**
  * Represents the overall map, and contains a grid of MapElement objects (accessible using the

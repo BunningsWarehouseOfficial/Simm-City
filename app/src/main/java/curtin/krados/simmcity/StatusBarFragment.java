@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
-import curtin.krados.simmcity.model.GameData;
+import curtin.krados.simmcity.model.GameData.GameData;
 
 public class StatusBarFragment extends Fragment {
     private TextView mCityNameText;
@@ -74,6 +74,7 @@ public class StatusBarFragment extends Fragment {
                     mLastIncomeText.setText(getString(R.string.last_income, '-', Math.abs(lastIncome)));
                 }
                 mDayText.setText(getString(R.string.day, data.getGameTime()));
+                data.update();
             }
         });
 
@@ -94,6 +95,7 @@ public class StatusBarFragment extends Fragment {
                     toast.show();
                 }
                 mMoneyText.setText(getString(R.string.money, money));
+                data.update();
             }
         });
         data.getNumResidential().observe(getViewLifecycleOwner(), new Observer<Integer>() {
@@ -115,6 +117,7 @@ public class StatusBarFragment extends Fragment {
                     mEmploymentText.setText(getString(R.string.employment_undefined));
                 }
                 mPopulationText.setText(getString(R.string.population, population));
+                data.update();
             }
         });
         data.getNumCommercial().observe(getViewLifecycleOwner(), new Observer<Integer>() {
@@ -131,6 +134,7 @@ public class StatusBarFragment extends Fragment {
                 catch (ArithmeticException e) {
                     mEmploymentText.setText(getString(R.string.employment_undefined));
                 }
+                data.update();
             }
         });
 

@@ -1,7 +1,17 @@
-package curtin.krados.simmcity.model;
+package curtin.krados.simmcity.model.GameData;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import curtin.krados.simmcity.model.GameDbHelper;
+import curtin.krados.simmcity.model.GameSchema;
+import curtin.krados.simmcity.model.MapElement;
+import curtin.krados.simmcity.model.Settings;
+import curtin.krados.simmcity.model.Structure.Structure;
 
 public class GameData {
     //Singleton
@@ -31,6 +41,8 @@ public class GameData {
     private boolean mDemolishing    = false;
     private boolean mGameOver       = false;
     private MapElement mDetailsElement;
+
+    private SQLiteDatabase db;
 
     //Constructor
     private GameData() {
@@ -99,6 +111,9 @@ public class GameData {
     public void setSettings(Settings settings) {
         mSettings = settings;
     }
+    public void setGameTime(int gameTime) {
+        mGameTime = gameTime;
+    }
     public void setMoney(int money) {
     mMoney.setValue(money);
     }
@@ -153,5 +168,52 @@ public class GameData {
         }
 
         return income;
+    }
+
+    //Database
+    public void load(Context context) {
+        this.db = new GameDbHelper(context.getApplicationContext()).getWritableDatabase();
+        GameDataCursor cursor = new GameDataCursor(db.query(GameSchema.GameDataTable.NAME,
+                null, null, null,
+                null, null, null)
+        );
+        try { //Iterate over query results
+            cursor.moveToFirst();
+            while(!cursor.isAfterLast()) {
+                cursor.getGameData(); //Load values from database row into memory
+                cursor.moveToNext();
+            }
+        }
+        finally {
+            cursor.close(); //Prevent app leaking resources
+        }
+    }
+    public void add() {
+        ContentValues cv = retrieveValues();
+        cv.put(GameSchema.GameDataTable.Cols.ID, 0);
+        db.insert(GameSchema.GameDataTable.NAME, null, cv);
+    }
+    /**
+     * Updates all values in the GameData database.
+     */
+    public void update() {
+        ContentValues cv = retrieveValues();
+        String[] whereValue = { String.valueOf(0) };
+        db.update(GameSchema.GameDataTable.NAME, cv, GameSchema.GameDataTable.Cols.ID + " + ?", whereValue);
+    }
+
+    //Private Methods
+    private ContentValues retrieveValues() {
+        ContentValues cv = new ContentValues();
+        cv.put(GameSchema.GameDataTable.Cols.CITY_NAME, mSettings.getCityName());
+        cv.put(GameSchema.GameDataTable.Cols.MAP_WIDTH, mSettings.getMapWidth());
+        cv.put(GameSchema.GameDataTable.Cols.MAP_HEIGHT, mSettings.getMapHeight());
+        cv.put(GameSchema.GameDataTable.Cols.INITIAL_MONEY, mSettings.getInitialMoney());
+        cv.put(GameSchema.GameDataTable.Cols.TAX_RATE, mSettings.getTaxRate());
+        cv.put(GameSchema.GameDataTable.Cols.GAME_TIME, mGameTime);
+        cv.put(GameSchema.GameDataTable.Cols.MONEY, mMoney.getValue());
+        cv.put(GameSchema.GameDataTable.Cols.NUM_RESIDENTIAL, mNumResidential.getValue());
+        cv.put(GameSchema.GameDataTable.Cols.NUM_COMMERCIAL, mNumCommercial.getValue());
+        return cv;
     }
 }

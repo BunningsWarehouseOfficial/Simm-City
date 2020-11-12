@@ -12,10 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import curtin.krados.simmcity.model.GameData;
+import curtin.krados.simmcity.model.GameData.GameData;
 import curtin.krados.simmcity.model.MapData;
 import curtin.krados.simmcity.model.MapElement;
-import curtin.krados.simmcity.model.Structure;
+import curtin.krados.simmcity.model.Structure.Structure;
 
 public class MapFragment extends Fragment {
     //RecyclerView Adapter implementation

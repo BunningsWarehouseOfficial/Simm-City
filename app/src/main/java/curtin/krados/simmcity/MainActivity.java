@@ -3,13 +3,12 @@ package curtin.krados.simmcity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import curtin.krados.simmcity.model.GameData;
+import curtin.krados.simmcity.model.GameData.GameData;
 import curtin.krados.simmcity.model.MapData;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        GameData.get().load(MainActivity.this);
+        update(); //TODO !!!!!!!!!!!!!!!! Database needs GameStarted value !!!!!!!!!!!!!!!!!! Continue here
 
         //Retrieving references
         mStartButton    = findViewById(R.id.startButton);
@@ -39,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
         mRestartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GameData.get().setGameStarted(false);
                 GameData.recreate();
+                //TODO Wipe database here
                 MapData.get().regenerate();
                 update();
             }
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 GameData data = GameData.get();
-                if (data.isGameStarted()) { //FIXME remove if not needed
+                if (data.isGameStarted()) { //FIXME remove if not needed (also remove string from strings.xml)
                     Toast.makeText(MainActivity.this, getString(R.string.settings_error), Toast.LENGTH_LONG).show();
                 }
                 else {

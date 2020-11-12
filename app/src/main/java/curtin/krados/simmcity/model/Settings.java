@@ -1,8 +1,10 @@
 package curtin.krados.simmcity.model;
 
+import android.database.sqlite.SQLiteDatabase;
+
 public class Settings {
     private String cityName = "Perth";
-    private int mapWidth = 30; //TODO Changed from 50, which is required
+    private int mapWidth = 50;
     private int mapHeight = 10;
     private int initialMoney = 1000;
     private int familySize = 4;
@@ -17,7 +19,7 @@ public class Settings {
     //Constructor
     public Settings() { }
 
-    //Accessors //TODO remove unused methods
+    //Accessors
     public String getCityName() {
         return cityName;
     }
@@ -68,28 +70,7 @@ public class Settings {
     public void setInitialMoney(int initialMoney) {
         this.initialMoney = initialMoney;
     }
-    public void setFamilySize(int familySize) {
-        this.familySize = familySize;
-    }
-    public void setShopSize(int shopSize) {
-        this.shopSize = shopSize;
-    }
-    public void setSalary(int salary) {
-        this.salary = salary;
-    }
     public void setTaxRate(double taxRate) {
         this.taxRate = taxRate;
-    }
-    public void setServiceCost(int serviceCost) {
-        this.serviceCost = serviceCost;
-    }
-    public void setHouseBuildingCost(int houseBuildingCost) {
-        this.houseBuildingCost = houseBuildingCost;
-    }
-    public void setCommBuildingCost(int commBuildingCost) {
-        this.commBuildingCost = commBuildingCost;
-    }
-    public void setRoadBuildingCost(int roadBuildingCost) {
-        this.roadBuildingCost = roadBuildingCost;
     }
 }

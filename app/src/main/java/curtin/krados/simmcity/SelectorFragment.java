@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import curtin.krados.simmcity.model.GameData;
-import curtin.krados.simmcity.model.Structure;
-import curtin.krados.simmcity.model.StructureData;
+import curtin.krados.simmcity.model.GameData.GameData;
+import curtin.krados.simmcity.model.Structure.Structure;
+import curtin.krados.simmcity.model.Structure.StructureData;
 
 public class SelectorFragment extends Fragment {
     //RecyclerView Adapter implementation

@@ -1,4 +1,4 @@
-package curtin.krados.simmcity.model;
+package curtin.krados.simmcity.model.Structure;
 
 import android.content.Context;
 

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import curtin.krados.simmcity.model.GameData;
+import curtin.krados.simmcity.model.GameData.GameData;
 import curtin.krados.simmcity.model.MapElement;
 
 public class DetailsFragment extends Fragment {

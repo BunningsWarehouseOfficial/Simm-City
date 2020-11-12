@@ -9,7 +9,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
-import curtin.krados.simmcity.model.GameData;
+import curtin.krados.simmcity.model.GameData.GameData;
 
 public class SettingsActivity extends AppCompatActivity {
     private GameData data;

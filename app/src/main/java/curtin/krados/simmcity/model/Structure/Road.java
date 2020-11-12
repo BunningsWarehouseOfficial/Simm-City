@@ -1,9 +1,10 @@
-package curtin.krados.simmcity.model;
+package curtin.krados.simmcity.model.Structure;
 
 import android.content.Context;
 
 import curtin.krados.simmcity.StructureException;
 import curtin.krados.simmcity.R;
+import curtin.krados.simmcity.model.GameData.GameData;
 
 public class Road extends Structure {
     //Constructor

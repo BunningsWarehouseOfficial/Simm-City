@@ -4,6 +4,9 @@ import android.content.Context;
 
 import curtin.krados.simmcity.StructureException;
 import curtin.krados.simmcity.R;
+import curtin.krados.simmcity.model.GameData.GameData;
+import curtin.krados.simmcity.model.Structure.Road;
+import curtin.krados.simmcity.model.Structure.Structure;
 
 /**
  * Represents a single grid square in the map. Each map element has both terrain and an optional
