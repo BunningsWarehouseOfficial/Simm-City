@@ -128,18 +128,22 @@ public class GameData {
     }
 
     public int nextDay() throws ArithmeticException {
+        int income;
         double employment, salary, taxRate, serviceCost, increment;
-        employment  = getEmploymentRate();
         salary      = (double)mSettings.getSalary();
         taxRate     = mSettings.getTaxRate();
         serviceCost = (double)mSettings.getServiceCost();
 
-        //Update the player's money
-        increment = (double)mPopulation * (employment * salary * taxRate - serviceCost);
-        int income = (int)Math.round(increment);
-        setMoney(mMoney.getValue() + income);
-
-        mGameTime++;
+        try {
+            //Update the player's money
+            employment  = getEmploymentRate();
+            increment = (double)mPopulation * (employment * salary * taxRate - serviceCost);
+            income = (int)Math.round(increment);
+            setMoney(mMoney.getValue() + income);
+        }
+        finally {
+            mGameTime++;
+        }
 
         return income;
     }

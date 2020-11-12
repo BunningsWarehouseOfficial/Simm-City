@@ -57,7 +57,16 @@ public class StatusBarFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 GameData data = GameData.get();
-                int lastIncome = data.nextDay();
+                int lastIncome;
+
+                try {
+                    lastIncome = data.nextDay();
+                }
+                catch (ArithmeticException e) {
+                    mEmploymentText.setText(getString(R.string.employment_undefined));
+                    lastIncome = 0;
+                }
+
                 if (lastIncome >= 0) {
                     mLastIncomeText.setText(getString(R.string.last_income, '+', lastIncome));
                 }
