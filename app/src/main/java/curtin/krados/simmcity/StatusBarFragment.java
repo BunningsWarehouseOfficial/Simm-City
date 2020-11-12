@@ -1,13 +1,11 @@
 package curtin.krados.simmcity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -40,7 +38,7 @@ public class StatusBarFragment extends Fragment {
         GameData data = GameData.get();
 
         //Initialising values
-        mCityNameText   .setText(data.getSettings().getCityName());
+        mCityNameText   .setText(data.getSettings().getCityName()); //TODO Test with long city names
         mPopulationText .setText(getString(R.string.population, 0));
         mDayText        .setText(getString(R.string.day, 0));
         mTemperatureText.setText(getString(R.string.temperature, 25)); //TODO Retrieve actual temperature if applicable, some other value if not

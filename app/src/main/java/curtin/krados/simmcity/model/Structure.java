@@ -2,7 +2,7 @@ package curtin.krados.simmcity.model;
 
 import android.content.Context;
 
-import curtin.krados.simmcity.BuildStructureException;
+import curtin.krados.simmcity.StructureException;
 
 /**
  * Represents a possible structure to be placed on the map. A structure simply contains a drawable
@@ -31,5 +31,6 @@ public abstract class Structure
     }
 
     //Mutators
-    abstract public void build(Context context) throws BuildStructureException;
+    abstract public void build(Context context) throws StructureException;
+    abstract public void demolish();
 }

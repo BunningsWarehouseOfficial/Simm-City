@@ -67,7 +67,7 @@ public class SelectorFragment extends Fragment {
                     itemView.setBackgroundColor(Color.parseColor("#E0E0E0"));
                 }
                 else {
-                    itemView.setBackgroundColor(Color.parseColor("#ffffff"));
+                    itemView.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 }
 
                 //Implementing callback / event handler for selecting a structure
@@ -93,10 +93,58 @@ public class SelectorFragment extends Fragment {
     // ========== //
 
     private RecyclerView rv;
+    private View mCellDetails;
+    private View mCellDemolish;
+    private ImageView mCellDetailsImage;
+    private ImageView mCellDemolishImage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup ui, Bundle bundle) {
         View view = inflater.inflate(R.layout.fragment_selector, ui, false);
+
+        //Retrieving references
+        mCellDetails       = view.findViewById(R.id.cellDetails);
+        mCellDemolish      = view.findViewById(R.id.cellDemolish);
+        mCellDetailsImage  = view.findViewById(R.id.cellDetailsImage);
+        mCellDemolishImage = view.findViewById(R.id.cellDemolishImage);
+
+        //Implementing callbacks / event handlers
+        mCellDetailsImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GameData data = GameData.get();
+                //Deselect Details
+                if (data.isDetailChecking()) {
+                    data.setDetailChecking(false);
+                    mCellDetails .setBackgroundColor(Color.parseColor("#FFFFFF"));
+                }
+                //Select Details
+                else {
+                    data.setDetailChecking(true);
+                    data.setDemolishing(false);
+                    mCellDetails .setBackgroundColor(Color.parseColor("#C5D3EA"));
+                    mCellDemolish.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                }
+            }
+        });
+        mCellDemolishImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GameData data = GameData.get();
+                //Deselect Demolishing
+                if (data.isDemolishing()) {
+                    data.setDemolishing(false);
+                    mCellDemolish.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                }
+                //Select Demolishing
+                else {
+                    data.setDemolishing(true);
+                    data.setDetailChecking(false);
+                    mCellDetails .setBackgroundColor(Color.parseColor("#FFFFFF"));
+                    mCellDemolish.setBackgroundColor(Color.parseColor("#EFE3CB"));
+                }
+            }
+        });
 
         //Setting up map RecyclerView
         rv = view.findViewById(R.id.selectorRecyclerView);

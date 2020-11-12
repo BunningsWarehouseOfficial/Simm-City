@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import curtin.krados.simmcity.model.GameData;
 import curtin.krados.simmcity.model.MapData;
 import curtin.krados.simmcity.model.MapElement;
-import curtin.krados.simmcity.model.Road;
 import curtin.krados.simmcity.model.Structure;
 
 public class MapFragment extends Fragment {
@@ -102,20 +101,34 @@ public class MapFragment extends Fragment {
                         index = getAdapterPosition();
                         row = index % MapData.HEIGHT;
                         col = index / MapData.HEIGHT;
-                        Structure selected = GameData.get().getSelectedStructure();
+                        GameData data = GameData.get();
+                        Structure selected = data.getSelectedStructure();
 
-                        if (selected != null) {
-                            try {
-                                mMapElement.setStructure(selected, row, col, getContext());
+                        try {
+                            if (selected != null) {
+                                //Build new structure
+                                if (!data.isDetailChecking() && !data.isDemolishing()) {
+                                    mMapElement.buildStructure(selected, row, col, getContext());
+                                }
+                                //Check the details on a structure
+                                else if (data.isDetailChecking()) {
+                                    //TODO Details screen
+                                }
+                                //Demolish a structure
+                                else if (data.isDemolishing()) {
+                                    mMapElement.removeStructure(row, col, getContext());
+
+                                    mStructureImage.setVisibility(View.INVISIBLE);
+                                }
 
                                 //Update the adapter
                                 MapAdapter.this.notifyItemChanged(index);
                             }
-                            catch (BuildStructureException e) {
-                                Toast toast = Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT);
-                                toast.setGravity(Gravity.BOTTOM, 0, 250);
-                                toast.show(); //TODO Test y offsets on other devices for consistency
-                            }
+                        }
+                        catch (StructureException e) {
+                            Toast toast = Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.BOTTOM, 0, 250);
+                            toast.show(); //TODO Test y offsets on other devices for consistency
                         }
                     }
                 });

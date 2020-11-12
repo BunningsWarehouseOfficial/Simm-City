@@ -25,6 +25,8 @@ public class GameData {
     private MutableLiveData<Integer> mNumCommercial;
     private Structure mSelectedStructure;
     private int mPreviousStructureIndex;
+    private boolean mDetailChecking = false;
+    private boolean mDemolishing = false;
 
     //Constructor
     private GameData() {
@@ -49,9 +51,6 @@ public class GameData {
     public LiveData<Integer> getMoney() {
         return mMoney;
     }
-    public int getPopulation() {
-        return mPopulation;
-    }
     public LiveData<Integer> getNumResidential() {
         return mNumResidential;
     }
@@ -63,6 +62,12 @@ public class GameData {
     }
     public int getPreviousStructureIndex() {
         return mPreviousStructureIndex;
+    }
+    public boolean isDetailChecking() {
+        return mDetailChecking;
+    }
+    public boolean isDemolishing() {
+        return mDemolishing;
     }
 
     public double getEmploymentRate() throws ArithmeticException {
@@ -79,9 +84,6 @@ public class GameData {
     //Mutators
     public void setSettings(Settings settings) {
         mSettings = settings;
-    }
-    public void setGameTime(int gameTime) {
-        mGameTime = gameTime;
     }
     public void setMoney(int money) {
     mMoney.setValue(money);
@@ -100,6 +102,12 @@ public class GameData {
     }
     public void setPreviousStructureIndex(int previousStructureIndex) {
         mPreviousStructureIndex = previousStructureIndex;
+    }
+    public void setDetailChecking(boolean detailChecking) {
+        mDetailChecking = detailChecking;
+    }
+    public void setDemolishing(boolean demolishing) {
+        mDemolishing = demolishing;
     }
 
     public int nextDay() throws ArithmeticException {

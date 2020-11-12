@@ -38,9 +38,11 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
-//TODO Update Android Studio to 4.1 for databases
+//FIXME Grid cells on map sometimes aren't connected properly with white half cross spaces between
+//TODO Some function for resetting the game/database/map
+
 //TODO Remove unused (grey) methods
 //TODO ContentDescriptions
 //TODO Remove redundant imports
-//FIXME Grid cells on map sometimes aren't connected properly with white half cross spaces between
-//TODO Some function for resetting the game/database/map
+//TODO Remove all invasive purple header from app
+//TODO Add JavaDocs class and method headers (especially the latter)

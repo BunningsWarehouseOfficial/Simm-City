@@ -2,7 +2,7 @@ package curtin.krados.simmcity.model;
 
 import android.content.Context;
 
-import curtin.krados.simmcity.BuildStructureException;
+import curtin.krados.simmcity.StructureException;
 import curtin.krados.simmcity.R;
 
 public class Commercial extends Structure {
@@ -13,7 +13,7 @@ public class Commercial extends Structure {
 
     //Mutators
     @Override
-    public void build(Context context) throws BuildStructureException {
+    public void build(Context context) throws StructureException {
         GameData data = GameData.get();
         int newMoney = data.getMoney().getValue() - data.getSettings().getCommBuildingCost();
         if (newMoney >= 0) {
@@ -21,7 +21,12 @@ public class Commercial extends Structure {
             data.setNumCommercial(data.getNumCommercial().getValue() + 1);
         }
         else {
-            throw new BuildStructureException(context.getString(R.string.not_enough_money_error));
+            throw new StructureException(context.getString(R.string.not_enough_money_error));
         }
+    }
+    @Override
+    public void demolish() {
+        GameData data = GameData.get();
+        data.setNumCommercial(data.getNumCommercial().getValue() - 1);
     }
 }

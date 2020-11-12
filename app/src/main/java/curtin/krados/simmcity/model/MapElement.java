@@ -2,7 +2,7 @@ package curtin.krados.simmcity.model;
 
 import android.content.Context;
 
-import curtin.krados.simmcity.BuildStructureException;
+import curtin.krados.simmcity.StructureException;
 import curtin.krados.simmcity.R;
 
 /**
@@ -32,45 +32,45 @@ import curtin.krados.simmcity.R;
  */
 public class MapElement
 {
-    private final boolean buildable;
-    private final int terrainNorthWest;
-    private final int terrainSouthWest;
-    private final int terrainNorthEast;
-    private final int terrainSouthEast;
-    private Structure structure;
+    private final boolean mBuildable;
+    private final int mTerrainNorthWest;
+    private final int mTerrainSouthWest;
+    private final int mTerrainNorthEast;
+    private final int mTerrainSouthEast;
+    private Structure mStructure;
 
     //Constructor
     public MapElement(boolean buildable, int northWest, int northEast,
                       int southWest, int southEast, Structure structure)
     {
-        this.buildable = buildable;
-        this.terrainNorthWest = northWest;
-        this.terrainNorthEast = northEast;
-        this.terrainSouthWest = southWest;
-        this.terrainSouthEast = southEast;
-        this.structure = structure;
+        this.mBuildable = buildable;
+        this.mTerrainNorthWest = northWest;
+        this.mTerrainNorthEast = northEast;
+        this.mTerrainSouthWest = southWest;
+        this.mTerrainSouthEast = southEast;
+        this.mStructure = structure;
     }
 
     //Accessors
     public boolean isBuildable()
     {
-        return buildable;
+        return mBuildable;
     }
     public int getNorthWest()
     {
-        return terrainNorthWest;
+        return mTerrainNorthWest;
     }
     public int getSouthWest()
     {
-        return terrainSouthWest;
+        return mTerrainSouthWest;
     }
     public int getNorthEast()
     {
-        return terrainNorthEast;
+        return mTerrainNorthEast;
     }
     public int getSouthEast()
     {
-        return terrainSouthEast;
+        return mTerrainSouthEast;
     }
     /**
      * Retrieves the structure built on this map element.
@@ -78,34 +78,58 @@ public class MapElement
      */
     public Structure getStructure()
     {
-        return structure;
+        return mStructure;
     }
 
     //Mutators
-    public void setStructure(Structure structure, int row, int col, Context context) throws BuildStructureException
+    public void buildStructure(Structure structure, int row, int col, Context context) throws StructureException
     {
+        //Check if there is already a structure at this location
+        if (mStructure != null) {
+            throw new StructureException(context.getString(R.string.space_occupied_error));
+        }
+
         //Check that the grid cell is one that can have structures built over it
-        if (buildable) {
+        if (mBuildable) {
             GameData data = GameData.get();
 
             if (structure instanceof Road) {
-                this.structure = structure;
+                mStructure = structure;
                 structure.build(context); //Update game values
             }
             else {
                 //Check that there is a road adjacent to the desired build location
                 if (roadCheck(row - 1, col) || roadCheck(row, col + 1) ||
                         roadCheck(row + 1, col) || roadCheck(row, col - 1)) {
-                    this.structure = structure;
                     structure.build(context); //Update game values
+                    mStructure = structure;
                 }
                 else {
-                    throw new BuildStructureException(context.getString(R.string.no_road_error));
+                    throw new StructureException(context.getString(R.string.no_road_error));
                 }
             }
         }
         else {
-            throw new BuildStructureException(context.getString(R.string.not_buildable_error));
+            throw new StructureException(context.getString(R.string.not_buildable_error));
+        }
+    }
+    public void removeStructure(int row, int col, Context context) throws StructureException {
+        if (mStructure instanceof Road) {
+            //Check if there are any adjacent non-road structures
+            if (buildingCheck(row - 1, col) || buildingCheck(row, col + 1) ||
+                    buildingCheck(row + 1, col) || buildingCheck(row, col - 1)) {
+                throw new StructureException(context.getString(R.string.cannot_demolish_road_error));
+            }
+            else {
+                mStructure.demolish(); //Update game values
+                mStructure = null;
+            }
+        }
+        else {
+            if (mStructure != null) {
+                mStructure.demolish(); //Update game values
+                mStructure = null;
+            }
         }
     }
 
@@ -120,5 +144,17 @@ public class MapElement
             }
         }
         return isRoad;
+    }
+    private boolean buildingCheck(int row, int col) {
+        boolean isBuilding = false;
+        //Check that the grid cell exists
+        if ((row >= 0 && row < MapData.HEIGHT) && (col >= 0 && col < MapData.WIDTH)) {
+            //Check that the grid cell has a structure that isn't a road (i.e. a building)
+            Structure structure = MapData.get().get(row, col).getStructure();
+            if (structure != null && !(structure instanceof Road)) {
+                isBuilding = true;
+            }
+        }
+        return isBuilding;
     }
 }

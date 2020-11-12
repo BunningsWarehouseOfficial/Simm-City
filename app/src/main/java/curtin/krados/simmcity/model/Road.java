@@ -2,7 +2,7 @@ package curtin.krados.simmcity.model;
 
 import android.content.Context;
 
-import curtin.krados.simmcity.BuildStructureException;
+import curtin.krados.simmcity.StructureException;
 import curtin.krados.simmcity.R;
 
 public class Road extends Structure {
@@ -13,14 +13,16 @@ public class Road extends Structure {
 
     //Mutators
     @Override
-    public void build(Context context) throws BuildStructureException {
+    public void build(Context context) throws StructureException {
         GameData data = GameData.get();
         int newMoney = data.getMoney().getValue() - data.getSettings().getRoadBuildingCost();
         if (newMoney >= 0) {
             data.setMoney(newMoney);
         }
         else {
-            throw new BuildStructureException(context.getString(R.string.not_enough_money_error));
+            throw new StructureException(context.getString(R.string.not_enough_money_error));
         }
     }
+    @Override
+    public void demolish() { }
 }

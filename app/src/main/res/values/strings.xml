@@ -38,7 +38,12 @@
     <string name="employment_undefined">No people to employ!</string>
     <string name="temperature">%d°C</string>
 
-    <string name="not_enough_money_error">You do not have enough money to build that</string>
+    <string name="demolish_label">Demolish</string>
+    <string name="details_label">Details</string>
+
+    <string name="cannot_demolish_road_error">You must demolish any adjacent structures first</string>
+    <string name="space_occupied_error">There is already a structure built here</string>
+    <string name="not_enough_money_error">You need more money to build that</string>
     <string name="no_road_error">Buildings must be built adjacent to roads</string>
     <string name="not_buildable_error">Buildings cannot be built over water</string>
 </resources>
