@@ -1,6 +1,9 @@
 package curtin.krados.simmcity;
 
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -10,12 +13,25 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+
 import curtin.krados.simmcity.model.GameData.GameData;
 
+import org.apache.commons.io.IOUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class StatusBarFragment extends Fragment {
+    private static final String API_KEY = "791ef53ed9a4fa297fcaec45ca26fdb9";
+
     private TextView mCityNameText;
     private TextView mPopulationText;
     private TextView mDayText;
@@ -25,6 +41,7 @@ public class StatusBarFragment extends Fragment {
     private TextView mEmploymentText;
     private Button mNextDayButton;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup ui, Bundle bundle) {
         View view = inflater.inflate(R.layout.fragment_status_bar, ui, false);
@@ -41,10 +58,10 @@ public class StatusBarFragment extends Fragment {
         GameData data = GameData.get();
 
         //Initialising values
-        mCityNameText   .setText(data.getSettings().getCityName()); //TODO Test with long city names
+        mCityNameText   .setText(data.getSettings().getCityName());
         mPopulationText .setText(getString(R.string.population, 0));
         mDayText        .setText(getString(R.string.day, data.getGameTime()));
-        mTemperatureText.setText(getString(R.string.temperature, 25)); //TODO Retrieve actual temperature if applicable, some other value if not
+        new GetTemperature().execute();
         mMoneyText      .setText(getString(R.string.money, data.getSettings().getInitialMoney()));
         mLastIncomeText .setText(getString(R.string.last_income, '+', 0));
         mEmploymentText .setText(getString(R.string.employment_undefined));
@@ -139,5 +156,51 @@ public class StatusBarFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private class GetTemperature extends AsyncTask<URL, String, String> {
+        @Override
+        protected String doInBackground(URL... urls) {
+            String data, temperature = null;
+            String cityName = GameData.get().getSettings().getCityName();
+            String urlString =
+                    Uri.parse("https://api.openweathermap.org/data/2.5/weather")
+                            .buildUpon()
+                            .appendQueryParameter("q", cityName)
+                            .appendQueryParameter("appid", API_KEY)
+                            .appendQueryParameter("units", "metric")
+                            .build().toString();
+            try {
+                URL url = new URL(urlString);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                try {
+                    if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                        data = IOUtils.toString(conn.getInputStream(), StandardCharsets.UTF_8);
+
+                        JSONObject jBase = new JSONObject(data);
+                        double value = jBase.getJSONObject("main").getDouble("temp");
+                        temperature = getString(R.string.temperature, value);
+                    }
+                    else {
+                        temperature = getString(R.string.temperature_not_found);
+                    }
+                }
+                finally {
+                    conn.disconnect();
+                }
+            }
+            catch (IOException | JSONException e) {
+                temperature = getString(R.string.temperature_not_found);
+            }
+            return temperature;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            mTemperatureText.setText(s);
+        }
     }
 }

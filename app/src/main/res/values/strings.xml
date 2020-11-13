@@ -42,7 +42,8 @@
     <string name="last_income">Yesterday: %c$%d</string>
     <string name="employment">%.1f%% Employment</string>
     <string name="employment_undefined">No people to employ!</string>
-    <string name="temperature">%d°C</string>
+    <string name="temperature">%.1f°C</string>
+    <string name="temperature_not_found">\? °C</string>
 
     <string name="demolish_label">Demolish</string>
     <string name="details_label">Details</string>
