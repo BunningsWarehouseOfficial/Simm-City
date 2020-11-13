@@ -1,4 +1,4 @@
-package curtin.krados.simmcity.model;
+package curtin.krados.simmcity.model.Map;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -51,7 +51,7 @@ public class MapElement
     private int mRow;
     private int mCol;
 
-    //Constructor
+    //Constructors
     public MapElement(boolean buildable, int northWest, int northEast,
                       int southWest, int southEast, Structure structure, int row, int col)
     {
@@ -65,6 +65,21 @@ public class MapElement
         mRow = row;
         mCol = col;
     }
+    public MapElement(boolean buildable, int northWest, int northEast,
+                      int southWest, int southEast, Structure structure,
+                      Bitmap thumbnail, int row, int col)
+    {
+        mBuildable = buildable;
+        mTerrainNorthWest = northWest;
+        mTerrainNorthEast = northEast;
+        mTerrainSouthWest = southWest;
+        mTerrainSouthEast = southEast;
+        mStructure = structure;
+        mThumbnail = thumbnail;
+        mRow = row;
+        mCol = col;
+    }
+
 
     //Accessors
     public boolean isBuildable()
@@ -117,7 +132,7 @@ public class MapElement
         }
 
         //Check that the grid cell is one that can have structures built over it
-        if (mBuildable) {
+        if (isBuildable()) {
             GameData data = GameData.get();
 
             if (structure instanceof Road) {

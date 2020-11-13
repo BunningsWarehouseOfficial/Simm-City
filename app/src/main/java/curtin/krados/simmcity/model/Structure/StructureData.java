@@ -28,7 +28,7 @@ public class StructureData
         R.drawable.ic_road_nse, R.drawable.ic_road_nsw, R.drawable.ic_road_new, R.drawable.ic_road_sew
     };
 
-    private List<Structure> structureList = Arrays.asList(
+    private static List<Structure> structureList = Arrays.asList(
             new Residential(R.drawable.ic_building1, "House"),
             new Residential(R.drawable.ic_building2, "House"),
             new Residential(R.drawable.ic_building3, "Barn"),
@@ -82,5 +82,24 @@ public class StructureData
     }
     public void remove(int i) {
         structureList.remove(i);
+    }
+
+    //Factory
+    public static Structure structureFactory(int drawableId, String label) {
+        Structure structure = null;
+        for (Structure s : structureList) {
+            if (label.equals(s.getLabel())) {
+                if (s.getString().equals("Road")) {
+                    structure = new Road(drawableId, label);
+                }
+                else if (s.getString().equals("Residential")) {
+                    structure = new Residential(drawableId, label);
+                }
+                else if (s.getString().equals("Commercial")) {
+                    structure = new Commercial(drawableId, label);
+                }
+            }
+        }
+        return structure;
     }
 }

@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import curtin.krados.simmcity.model.GameDbHelper;
 import curtin.krados.simmcity.model.GameSchema.GameDataTable;
-import curtin.krados.simmcity.model.MapElement;
+import curtin.krados.simmcity.model.Map.MapElement;
 import curtin.krados.simmcity.model.Settings;
 import curtin.krados.simmcity.model.Structure.Structure;
 
@@ -205,13 +205,16 @@ public class GameData {
         db.insert(GameDataTable.NAME, null, cv);
     }
     /**
-     * Updates all values in the GameData database.
+     * Updates all data in the GameData table.
      */
     public void update() {
         ContentValues cv = retrieveValues();
         String[] whereValue = { String.valueOf(0) };
         db.update(GameDataTable.NAME, cv, GameDataTable.Cols.ID + " = ?", whereValue);
     }
+    /**
+     * Clears all data from the GameData table.
+     */
     public void clear() {
         String[] whereValue = { String.valueOf(0) };
         db.delete(GameDataTable.NAME, GameDataTable.Cols.ID + " = ?", whereValue);

@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import curtin.krados.simmcity.model.GameData.GameData;
-import curtin.krados.simmcity.model.MapData;
+import curtin.krados.simmcity.model.Map.MapData;
 
 public class MainActivity extends AppCompatActivity {
     private Button mStartButton;
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         GameData data = GameData.get();
 
-        //Load the database; if it is empty then insert a tuple based on the info in GameData
+        //Load the GameData table; if it is empty then insert a tuple based on the data in GameData
         if (!data.load(MainActivity.this)) {
             data.add();
         }
@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
         mStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Load the MapData table
+                MapData.get().load(MainActivity.this);
+
                 GameData.get().setGameStarted(true);
                 Intent intent = GameActivity.getIntent(MainActivity.this);
                 startActivity(intent);
@@ -46,15 +49,12 @@ public class MainActivity extends AppCompatActivity {
         mRestartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Transfer database memory reference without reloading its data into new GameData
                 GameData data = GameData.get();
-                SQLiteDatabase db = data.getDb();
+                data.clear(); //Clear the GameData table
                 data = GameData.recreate();
-                data.setDb(db);
+                data.add();   //Generate new GameData table
 
-                data.clear(); //Clear the database
-                data.add();   //Generate new database
-                MapData.get().regenerate();
+                MapData.get().regenerate(); //Regenerate game map and recreate Map table
                 updateUI();
             }
         });

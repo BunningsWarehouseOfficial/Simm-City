@@ -18,8 +18,8 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import curtin.krados.simmcity.model.GameData.GameData;
-import curtin.krados.simmcity.model.MapData;
-import curtin.krados.simmcity.model.MapElement;
+import curtin.krados.simmcity.model.Map.MapData;
+import curtin.krados.simmcity.model.Map.MapElement;
 
 public class DetailsFragment extends Fragment {
     private static final int REQUEST_THUMBNAIL = 1;
@@ -111,7 +111,7 @@ public class DetailsFragment extends Fragment {
             mImage.setScaleY(THUMBNAIL_SCALE);
 
             mDetailsElement.setThumbnail(newThumbnail);
-            //todo save in database
+            MapData.get().edit(mDetailsElement);
         }
     }
 }

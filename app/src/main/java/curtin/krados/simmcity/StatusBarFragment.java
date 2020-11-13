@@ -164,21 +164,22 @@ public class StatusBarFragment extends Fragment {
         protected String doInBackground(URL... urls) {
             String data, temperature = null;
             String cityName = GameData.get().getSettings().getCityName();
-            String urlString =
-                    Uri.parse("https://api.openweathermap.org/data/2.5/weather")
-                            .buildUpon()
-                            .appendQueryParameter("q", cityName)
-                            .appendQueryParameter("appid", API_KEY)
-                            .appendQueryParameter("units", "metric")
-                            .build().toString();
+            String urlString = Uri.parse("https://api.openweathermap.org/data/2.5/weather")
+                               .buildUpon()
+                               .appendQueryParameter("q", cityName)
+                               .appendQueryParameter("appid", API_KEY)
+                               .appendQueryParameter("units", "metric")
+                               .build().toString();
             try {
                 URL url = new URL(urlString);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
                 try {
+                    //Check that a stable connection to a valid URL has been made
                     if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                         data = IOUtils.toString(conn.getInputStream(), StandardCharsets.UTF_8);
 
+                        //Parse the JSON object provided by the weather API
                         JSONObject jBase = new JSONObject(data);
                         double value = jBase.getJSONObject("main").getDouble("temp");
                         temperature = getString(R.string.temperature, value);

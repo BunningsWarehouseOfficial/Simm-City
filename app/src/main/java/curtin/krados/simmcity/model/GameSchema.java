@@ -1,7 +1,7 @@
 package curtin.krados.simmcity.model;
 
 public class GameSchema {
-    public static class GameDataTable { //TODO Does game over status need to be in database? What if you leave the game in game over and re-enter?
+    public static class GameDataTable {
         public static final String NAME = "game"; //Table name
         public static class Cols {                //Column names
             public static final String ID = "id";
@@ -17,5 +17,19 @@ public class GameSchema {
             public static final String GAME_STARTED = "game_started";
         }
     }
-    //TODO Another table here
+
+    public static class MapTable {
+        public static String NAME = "map"; //Table name
+        public static class Cols {
+            public static final String ID = "id";
+            public static final String LABEL = "label";
+            public static final String DRAWABLE = "drawable";
+            public static final String THUMBNAIL = "thumbnail";
+            public static final String BUILDABLE = "buildable";
+            public static final String NW = "nw";
+            public static final String NE = "ne";
+            public static final String SW = "sw";
+            public static final String SE = "se";
+        }
+    }
 }

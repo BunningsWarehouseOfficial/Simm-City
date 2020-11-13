@@ -69,8 +69,8 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         });
-        mMapWidthInput.addTextChangedListener(new TextWatcher() { //TODO Use a generic method for to remove repeated integer code
-            @Override //TODO Test wacky map sizes and see how the map scales; should always fill screen
+        mMapWidthInput.addTextChangedListener(new TextWatcher() {
+            @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) { }

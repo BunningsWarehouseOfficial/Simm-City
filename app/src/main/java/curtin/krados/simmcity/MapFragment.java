@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import curtin.krados.simmcity.model.GameData.GameData;
-import curtin.krados.simmcity.model.MapData;
-import curtin.krados.simmcity.model.MapElement;
+import curtin.krados.simmcity.model.Map.MapData;
+import curtin.krados.simmcity.model.Map.MapElement;
 import curtin.krados.simmcity.model.Structure.Structure;
 
 public class MapFragment extends Fragment {
@@ -44,7 +44,8 @@ public class MapFragment extends Fragment {
             //Retrieving the position of the cell using the column-major order mapping
             int row = index % MapData.HEIGHT;
             int col = index / MapData.HEIGHT;
-            vh.bind(mMapData.get(row, col));
+            MapElement toBind = mMapData.get(col, row); //todo temp
+            vh.bind(toBind);
         }
 
         //RecyclerView ViewHolder implementation
@@ -127,6 +128,8 @@ public class MapFragment extends Fragment {
                                     mStructureImage.setVisibility(View.INVISIBLE);
                                 }
 
+                                //Update the Map table
+                                MapData.get().edit(mMapElement);
                                 //Update the adapter
                                 MapAdapter.this.notifyItemChanged(index);
                             }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import curtin.krados.simmcity.model.GameSchema.GameDataTable;
+import curtin.krados.simmcity.model.GameSchema.MapTable;
 
 public class GameDbHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
@@ -28,7 +29,17 @@ public class GameDbHelper extends SQLiteOpenHelper {
                 GameDataTable.Cols.NUM_RESIDENTIAL + " INTEGER, " +
                 GameDataTable.Cols.NUM_COMMERCIAL + " INTEGER, " +
                 GameDataTable.Cols.GAME_STARTED + " INTEGER)"); //Boolean
-        //TODO Another table here
+
+        db.execSQL("CREATE TABLE " + MapTable.NAME + "(" +
+                MapTable.Cols.ID + " TEXT, " +
+                MapTable.Cols.LABEL + " TEXT, " +
+                MapTable.Cols.DRAWABLE + " INTEGER, " +
+                MapTable.Cols.THUMBNAIL + " BLOB, " +
+                MapTable.Cols.BUILDABLE + " INTEGER, " + //Boolean
+                MapTable.Cols.NW + " INTEGER, " +
+                MapTable.Cols.NE + " INTEGER, " +
+                MapTable.Cols.SW + " INTEGER, " +
+                MapTable.Cols.SE + " INTEGER)");
     }
 
     @Override
