@@ -44,7 +44,7 @@ public class MapFragment extends Fragment {
             //Retrieving the position of the cell using the column-major order mapping
             int row = index % MapData.HEIGHT;
             int col = index / MapData.HEIGHT;
-            MapElement toBind = mMapData.get(col, row); //todo temp
+            MapElement toBind = mMapData.get(row, col);
             vh.bind(toBind);
         }
 

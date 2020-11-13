@@ -203,18 +203,9 @@ public class MapData
         clear();
         MapElement[][] newGrid = generateGrid();;
         this.grid = newGrid;
-//        for (MapElement[] row : newGrid) {
-//            for (MapElement element : row) {
-//                int coll = element.getCol(); //todo temp
-//                int roww = element.getRow(); //todo temp
-//                int index = coll * MapData.HEIGHT + roww; //todo temp
-//                add(element);
-//            }
-//        }
         for (int ii = 0; ii < HEIGHT; ii++) {
-            for (int jj = 0; jj < WIDTH; ii++) {
+            for (int jj = 0; jj < WIDTH; jj++) {
                 MapElement element = grid[ii][jj];
-                int index = ii * MapData.HEIGHT + jj; //todo temp
                 add(element);
             }
         }
@@ -233,11 +224,11 @@ public class MapData
         try { //Iterate over query results
             int count = 0;
             cursor.moveToFirst();
+            this.grid = new MapElement[HEIGHT][WIDTH];
             while(!cursor.isAfterLast()) {
                 MapElement element = cursor.getMapElement(); //Load values from database row into memory
                 int row = element.getRow();
                 int col = element.getCol();
-                this.grid = new MapElement[HEIGHT][WIDTH];
                 grid[row][col] = element;
                 cursor.moveToNext();
                 count++;
