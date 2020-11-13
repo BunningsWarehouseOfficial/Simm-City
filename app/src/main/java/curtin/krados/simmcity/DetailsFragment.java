@@ -103,7 +103,6 @@ public class DetailsFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent resultIntent) {
-        //FIXME Thumbnails are rotated 90 degrees anti-clockwise for back camera, clockwise for front camera
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_THUMBNAIL) {
             Bitmap newThumbnail = (Bitmap) resultIntent.getExtras().get("data");
             mImage.setImageBitmap(newThumbnail);

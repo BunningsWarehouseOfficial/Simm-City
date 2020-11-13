@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 GameData data = GameData.get();
-                if (data.isGameStarted()) { //FIXME remove if not needed (also remove string from strings.xml)
+                if (data.isGameStarted()) {
                     Toast.makeText(MainActivity.this, getString(R.string.settings_error), Toast.LENGTH_LONG).show();
                 }
                 else {
@@ -100,17 +100,3 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
-
-//FIXME Grid cells on map sometimes aren't connected properly with white half cross spaces between
-//TODO Some function for resetting the game/database/map
-//TODO Implement OwnerName
-
-//TODO Remove unused (grey) methods
-//TODO ContentDescriptions
-//TODO Remove redundant imports
-//TODO Add JavaDocs class and method headers (especially the latter)
-//TODO Center the text in toasts (particularly game over toast)
-//TODO Green and red yesterday income text for just the monetary value
-//TODO Show image of structure/thumbnail in details screen
-//  Always show original structure up top and show thumbnail at bottom if there is one
-//  Have bottom at very bottom below thumbnail to remove thumbnail

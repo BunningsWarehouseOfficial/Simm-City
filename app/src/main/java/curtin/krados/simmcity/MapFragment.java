@@ -137,7 +137,7 @@ public class MapFragment extends Fragment {
                         catch (StructureException e) {
                             Toast toast = Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT);
                             toast.setGravity(Gravity.BOTTOM, 0, 250);
-                            toast.show(); //TODO Test y offsets on other devices for consistency
+                            toast.show();
                         }
                     }
                 });

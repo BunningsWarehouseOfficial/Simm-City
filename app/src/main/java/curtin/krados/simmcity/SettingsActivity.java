@@ -45,7 +45,7 @@ public class SettingsActivity extends AppCompatActivity {
         mInitialMoneyInput.setHint(getString(R.string.initial_money_value, data.getSettings().getInitialMoney()));
         mTaxRateInput     .setHint(getString(R.string.tax_rate_value, data.getSettings().getTaxRate()));
 
-        //Implementing callbacks / event handlers //TODO At end of project test this on all devices to ensure that you can't enter a negative number, because it isn't checked
+        //Implementing callbacks / event handlers
         mCityNameInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
