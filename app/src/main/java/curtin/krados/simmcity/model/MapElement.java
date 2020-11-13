@@ -1,6 +1,7 @@
 package curtin.krados.simmcity.model;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import curtin.krados.simmcity.StructureException;
 import curtin.krados.simmcity.R;
@@ -9,6 +10,11 @@ import curtin.krados.simmcity.model.Structure.Road;
 import curtin.krados.simmcity.model.Structure.Structure;
 
 /**
+ * @author David Cooper
+ * @author Kristian Rados
+ *
+ * Based on original code by David Cooper.
+ *
  * Represents a single grid square in the map. Each map element has both terrain and an optional
  * structure.
  *
@@ -41,6 +47,7 @@ public class MapElement
     private final int mTerrainNorthEast;
     private final int mTerrainSouthEast;
     private Structure mStructure;
+    private Bitmap mThumbnail;
     private int mRow;
     private int mCol;
 
@@ -54,6 +61,7 @@ public class MapElement
         mTerrainSouthWest = southWest;
         mTerrainSouthEast = southEast;
         mStructure = structure;
+        mThumbnail = null;
         mRow = row;
         mCol = col;
     }
@@ -87,6 +95,9 @@ public class MapElement
     {
         return mStructure;
     }
+    public Bitmap getThumbnail() {
+        return mThumbnail;
+    }
     public int getRow() {
         return mRow;
     }
@@ -95,6 +106,9 @@ public class MapElement
     }
 
     //Mutators
+    public void setThumbnail(Bitmap thumbnail) {
+        mThumbnail = thumbnail;
+    }
     public void buildStructure(Structure structure, Context context) throws StructureException
     {
         //Check if there is already a structure at this location

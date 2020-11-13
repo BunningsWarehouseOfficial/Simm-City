@@ -6,6 +6,8 @@ import curtin.krados.simmcity.R;
 import curtin.krados.simmcity.model.GameData.GameData;
 
 /**
+ * @author David Cooper
+ *
  * Represents the overall map, and contains a grid of MapElement objects (accessible using the
  * get(row, col) method). The two static constants WIDTH and HEIGHT indicate the size of the map.
  *

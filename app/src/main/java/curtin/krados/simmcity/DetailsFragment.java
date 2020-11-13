@@ -1,6 +1,10 @@
 package curtin.krados.simmcity;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -8,20 +12,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import curtin.krados.simmcity.model.GameData.GameData;
+import curtin.krados.simmcity.model.MapData;
 import curtin.krados.simmcity.model.MapElement;
 
 public class DetailsFragment extends Fragment {
+    private static final int REQUEST_THUMBNAIL = 1;
+    private static final float THUMBNAIL_SCALE = (float)1.5;
+
     private MapElement mDetailsElement;
 
     private TextView mTypeText;
     private EditText mStructureNameInput;
     private TextView mCoordinatesValues;
     private Button mThumbnailButton;
+    private ImageView mImage;
     private Button mBackButton;
 
     @Override
@@ -33,6 +43,7 @@ public class DetailsFragment extends Fragment {
         mStructureNameInput = view.findViewById(R.id.structureNameInput);
         mCoordinatesValues  = view.findViewById(R.id.coordinatesValues);
         mThumbnailButton    = view.findViewById(R.id.thumbnailButton);
+        mImage              = view.findViewById(R.id.structureImage);
         mBackButton         = view.findViewById(R.id.backButton);
 
         //Initialising values
@@ -41,7 +52,18 @@ public class DetailsFragment extends Fragment {
         mStructureNameInput.setText(mDetailsElement.getStructure().getLabel());
         int row = mDetailsElement.getRow();
         int col = mDetailsElement.getCol();
-        mCoordinatesValues.setText(getString(R.string.coordinates_value, row, col));
+        mCoordinatesValues.setText(getString(R.string.coordinates_value, row + 1, col + 1));
+        Bitmap thumbnail = mDetailsElement.getThumbnail();
+        if (thumbnail != null) { //Show the current thumbnail
+            mImage.setImageBitmap(thumbnail);
+            mImage.setScaleX(THUMBNAIL_SCALE);
+            mImage.setScaleY(THUMBNAIL_SCALE);
+        }
+        else { //Show structure image if there is no thumbnail
+            mImage.setImageResource(mDetailsElement.getStructure().getDrawableId());
+            mImage.setScaleX(3);
+            mImage.setScaleY(3);
+        }
 
         //Implementing callbacks / event handlers
         mStructureNameInput.addTextChangedListener(new TextWatcher() {
@@ -64,7 +86,9 @@ public class DetailsFragment extends Fragment {
         mThumbnailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO Open camera
+                Intent thumbnailPhotoIntent;
+                thumbnailPhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(thumbnailPhotoIntent, REQUEST_THUMBNAIL);
             }
         });
         mBackButton.setOnClickListener(new View.OnClickListener() {
@@ -75,5 +99,19 @@ public class DetailsFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultIntent) {
+        //FIXME Thumbnails are rotated 90 degrees anti-clockwise for back camera, clockwise for front camera
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_THUMBNAIL) {
+            Bitmap newThumbnail = (Bitmap) resultIntent.getExtras().get("data");
+            mImage.setImageBitmap(newThumbnail);
+            mImage.setScaleX(THUMBNAIL_SCALE);
+            mImage.setScaleY(THUMBNAIL_SCALE);
+
+            mDetailsElement.setThumbnail(newThumbnail);
+            //todo save in database
+        }
     }
 }

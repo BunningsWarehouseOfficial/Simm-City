@@ -1,5 +1,6 @@
 package curtin.krados.simmcity;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -82,9 +83,15 @@ public class MapFragment extends Fragment {
                 mSouthEastImage.setImageResource(mapElement.getSouthEast());
                 mSouthWestImage.setImageResource(mapElement.getSouthWest());
                 Structure elementStructure = mapElement.getStructure();
+                Bitmap thumbnail = mapElement.getThumbnail();
                 if (elementStructure != null) {
                     mStructureImage.setVisibility(View.VISIBLE);
-                    mStructureImage.setImageResource(elementStructure.getDrawableId());
+                    if (thumbnail != null) {
+                        mStructureImage.setImageBitmap(thumbnail);
+                    }
+                    else {
+                        mStructureImage.setImageResource(elementStructure.getDrawableId());
+                    }
                 }
                 else {
                     mStructureImage.setVisibility(View.INVISIBLE);
