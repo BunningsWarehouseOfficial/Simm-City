@@ -49,10 +49,11 @@ public class MainActivity extends AppCompatActivity {
         mRestartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Transfer database memory reference without reloading its data into new GameData
                 GameData data = GameData.get();
-                data.clear(); //Clear the GameData table
+                SQLiteDatabase db = data.getDb();
                 data = GameData.recreate();
-                data.add();   //Generate new GameData table
+                data.setDb(db);
 
                 MapData.get().regenerate(); //Regenerate game map and recreate Map table
                 updateUI();

@@ -29,7 +29,7 @@ public class MapCursor extends CursorWrapper {
         if (thumbnailBlob != null) {
             thumbnail = BitmapFactory.decodeByteArray(thumbnailBlob, 0, thumbnailBlob.length);
         }
-        boolean buildable    = getColumnIndex(MapTable.Cols.BUILDABLE) == 1;
+        boolean buildable    = getInt(getColumnIndex(MapTable.Cols.BUILDABLE)) == 1;
         int northWest        = getInt(getColumnIndex(MapTable.Cols.NW));
         int northEast        = getInt(getColumnIndex(MapTable.Cols.NE));
         int southWest        = getInt(getColumnIndex(MapTable.Cols.SW));

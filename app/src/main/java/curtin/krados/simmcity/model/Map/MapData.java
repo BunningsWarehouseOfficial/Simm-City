@@ -205,7 +205,7 @@ public class MapData
         this.grid = newGrid;
         for (int ii = 0; ii < HEIGHT; ii++) {
             for (int jj = 0; jj < WIDTH; jj++) {
-                MapElement element = grid[ii][jj];
+                MapElement element = newGrid[ii][jj];
                 add(element);
             }
         }
@@ -275,14 +275,21 @@ public class MapData
         //Retrieving needed values for calculation
         Structure structure = mapElement.getStructure();
         Bitmap bitmap = mapElement.getThumbnail();
-        if (bitmap != null) {
+        if (bitmap == null) {
+            cv.putNull(MapTable.Cols.THUMBNAIL);
+        }
+        else {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
             byte[] blob = bos.toByteArray();
             cv.put(MapTable.Cols.THUMBNAIL, blob);
         }
 
-        if (structure != null) {
+        if (structure == null) {
+            cv.putNull(MapTable.Cols.LABEL);
+            cv.putNull(MapTable.Cols.DRAWABLE);
+        }
+        else {
             cv.put(MapTable.Cols.LABEL, structure.getLabel());
             cv.put(MapTable.Cols.DRAWABLE, structure.getDrawableId());
         }
