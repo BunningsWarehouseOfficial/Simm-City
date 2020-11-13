@@ -14,6 +14,7 @@ public class GameSchema {
             public static final String MONEY = "money";
             public static final String NUM_RESIDENTIAL = "num_residential";
             public static final String NUM_COMMERCIAL = "num_commercial";
+            public static final String GAME_STARTED = "game_started";
         }
     }
     //TODO Another table here

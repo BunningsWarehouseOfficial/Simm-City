@@ -54,6 +54,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
                 else {
                     data.getSettings().setCityName(value);
+                    data.update();
                     mCityNameInput.setHint(value);
                 }
             }
@@ -68,6 +69,7 @@ public class SettingsActivity extends AppCompatActivity {
                 try {
                     int value = Integer.parseInt(s.toString());
                     data.getSettings().setMapWidth(value);
+                    data.update();
                     mMapWidthInput.setHint(getString(R.string.map_width_value, value));
                 }
                 catch (NumberFormatException e) { //Show the user a simple error message
@@ -85,6 +87,7 @@ public class SettingsActivity extends AppCompatActivity {
                 try {
                     int value = Integer.parseInt(s.toString());
                     data.getSettings().setMapHeight(value);
+                    data.update();
                     mMapHeightInput.setHint(getString(R.string.map_height_value, value));
                 }
                 catch (NumberFormatException e) { //Show the user a simple error message
@@ -102,6 +105,10 @@ public class SettingsActivity extends AppCompatActivity {
                 try {
                     int value = Integer.parseInt(s.toString());
                     data.getSettings().setInitialMoney(value);
+                    if (!data.isGameStarted()) {
+                        data.setMoney(value);
+                    }
+                    data.update();
                     mInitialMoneyInput.setHint(getString(R.string.initial_money_value, value));
                 }
                 catch (NumberFormatException e) { //Show the user a simple error message
@@ -118,8 +125,14 @@ public class SettingsActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 try {
                     double value = Double.parseDouble(s.toString());
-                    data.getSettings().setTaxRate(value);
-                    mTaxRateInput.setHint(getString(R.string.tax_rate_value, value));
+                    if (value > 1.0) {
+                        mTaxRateInput.setError(getString(R.string.tax_rate_error));
+                    }
+                    else {
+                        data.getSettings().setTaxRate(value);
+                        data.update();
+                        mTaxRateInput.setHint(getString(R.string.tax_rate_value, value));
+                    }
                 }
                 catch (NumberFormatException e) { //Show the user a simple error message
                     mTaxRateInput.setError(getString(R.string.tax_rate_error));

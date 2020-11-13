@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import curtin.krados.simmcity.model.GameDbHelper;
-import curtin.krados.simmcity.model.GameSchema;
+import curtin.krados.simmcity.model.GameSchema.GameDataTable;
 import curtin.krados.simmcity.model.MapElement;
 import curtin.krados.simmcity.model.Settings;
 import curtin.krados.simmcity.model.Structure.Structure;
@@ -96,6 +96,10 @@ public class GameData {
         return mDetailsElement;
     }
 
+    public SQLiteDatabase getDb() {
+        return db;
+    }
+
     public double getEmploymentRate() throws ArithmeticException {
         if (mPopulation > 0) {
             double nCommercial = (double)mNumCommercial.getValue();
@@ -149,6 +153,10 @@ public class GameData {
         mDetailsElement = detailsElement;
     }
 
+    public void setDb(SQLiteDatabase db) {
+        this.db = db;
+    }
+
     public int nextDay() throws ArithmeticException {
         int income;
         double employment, salary, taxRate, serviceCost, increment;
@@ -171,9 +179,10 @@ public class GameData {
     }
 
     //Database
-    public void load(Context context) {
+    public boolean load(Context context) {
+        boolean isFilled = false; //Whether the database actually has data in it or not
         this.db = new GameDbHelper(context.getApplicationContext()).getWritableDatabase();
-        GameDataCursor cursor = new GameDataCursor(db.query(GameSchema.GameDataTable.NAME,
+        GameDataCursor cursor = new GameDataCursor(db.query(GameDataTable.NAME,
                 null, null, null,
                 null, null, null)
         );
@@ -182,16 +191,18 @@ public class GameData {
             while(!cursor.isAfterLast()) {
                 cursor.getGameData(); //Load values from database row into memory
                 cursor.moveToNext();
+                isFilled = true;
             }
         }
         finally {
             cursor.close(); //Prevent app leaking resources
         }
+        return isFilled;
     }
     public void add() {
         ContentValues cv = retrieveValues();
-        cv.put(GameSchema.GameDataTable.Cols.ID, 0);
-        db.insert(GameSchema.GameDataTable.NAME, null, cv);
+        cv.put(GameDataTable.Cols.ID, String.valueOf(0));
+        db.insert(GameDataTable.NAME, null, cv);
     }
     /**
      * Updates all values in the GameData database.
@@ -199,21 +210,31 @@ public class GameData {
     public void update() {
         ContentValues cv = retrieveValues();
         String[] whereValue = { String.valueOf(0) };
-        db.update(GameSchema.GameDataTable.NAME, cv, GameSchema.GameDataTable.Cols.ID + " + ?", whereValue);
+        db.update(GameDataTable.NAME, cv, GameDataTable.Cols.ID + " = ?", whereValue);
+    }
+    public void clear() {
+        String[] whereValue = { String.valueOf(0) };
+        db.delete(GameDataTable.NAME, GameDataTable.Cols.ID + " = ?", whereValue);
     }
 
     //Private Methods
     private ContentValues retrieveValues() {
         ContentValues cv = new ContentValues();
-        cv.put(GameSchema.GameDataTable.Cols.CITY_NAME, mSettings.getCityName());
-        cv.put(GameSchema.GameDataTable.Cols.MAP_WIDTH, mSettings.getMapWidth());
-        cv.put(GameSchema.GameDataTable.Cols.MAP_HEIGHT, mSettings.getMapHeight());
-        cv.put(GameSchema.GameDataTable.Cols.INITIAL_MONEY, mSettings.getInitialMoney());
-        cv.put(GameSchema.GameDataTable.Cols.TAX_RATE, mSettings.getTaxRate());
-        cv.put(GameSchema.GameDataTable.Cols.GAME_TIME, mGameTime);
-        cv.put(GameSchema.GameDataTable.Cols.MONEY, mMoney.getValue());
-        cv.put(GameSchema.GameDataTable.Cols.NUM_RESIDENTIAL, mNumResidential.getValue());
-        cv.put(GameSchema.GameDataTable.Cols.NUM_COMMERCIAL, mNumCommercial.getValue());
+        cv.put(GameDataTable.Cols.CITY_NAME, mSettings.getCityName());
+        cv.put(GameDataTable.Cols.MAP_WIDTH, mSettings.getMapWidth());
+        cv.put(GameDataTable.Cols.MAP_HEIGHT, mSettings.getMapHeight());
+        cv.put(GameDataTable.Cols.INITIAL_MONEY, mSettings.getInitialMoney());
+        cv.put(GameDataTable.Cols.TAX_RATE, mSettings.getTaxRate());
+        cv.put(GameDataTable.Cols.GAME_TIME, mGameTime);
+        cv.put(GameDataTable.Cols.MONEY, mMoney.getValue());
+        cv.put(GameDataTable.Cols.NUM_RESIDENTIAL, mNumResidential.getValue());
+        cv.put(GameDataTable.Cols.NUM_COMMERCIAL, mNumCommercial.getValue());
+        if (mGameStarted) {
+            cv.put(GameDataTable.Cols.GAME_STARTED, 1); //True
+        }
+        else {
+            cv.put(GameDataTable.Cols.GAME_STARTED, 0); //False
+        }
         return cv;
     }
 }

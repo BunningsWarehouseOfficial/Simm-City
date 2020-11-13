@@ -3,6 +3,7 @@ package curtin.krados.simmcity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,13 +21,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        GameData.get().load(MainActivity.this);
-        update(); //TODO !!!!!!!!!!!!!!!! Database needs GameStarted value !!!!!!!!!!!!!!!!!! Continue here
+        GameData data = GameData.get();
+
+        //Load the database; if it is empty then insert a tuple based on the info in GameData
+        if (!data.load(MainActivity.this)) {
+            data.add();
+        }
 
         //Retrieving references
         mStartButton    = findViewById(R.id.startButton);
         mRestartButton  = findViewById(R.id.restartButton);
         mSettingsButton = findViewById(R.id.settingsButton);
+        updateUI();
 
         //Implementing callbacks / event handlers
         mStartButton.setOnClickListener(new View.OnClickListener() {
@@ -40,10 +46,16 @@ public class MainActivity extends AppCompatActivity {
         mRestartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GameData.recreate();
-                //TODO Wipe database here
+                //Transfer database memory reference without reloading its data into new GameData
+                GameData data = GameData.get();
+                SQLiteDatabase db = data.getDb();
+                data = GameData.recreate();
+                data.setDb(db);
+
+                data.clear(); //Clear the database
+                data.add();   //Generate new database
                 MapData.get().regenerate();
-                update();
+                updateUI();
             }
         });
         mSettingsButton.setOnClickListener(new View.OnClickListener() {
@@ -64,11 +76,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        update();
+        updateUI();
     }
 
     //Private Methods
-    private void update() {
+    private void updateUI() {
         if (GameData.get().isGameStarted()) {
             //Set start button to resume
             mStartButton.setText(getString(R.string.resume_button));

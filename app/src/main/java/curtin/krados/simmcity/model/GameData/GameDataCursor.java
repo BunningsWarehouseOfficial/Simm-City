@@ -28,6 +28,7 @@ public class GameDataCursor extends CursorWrapper {
         data.setMoney(getInt(getColumnIndex(GameDataTable.Cols.MONEY)));
         data.setNumResidential(getInt(getColumnIndex(GameDataTable.Cols.NUM_RESIDENTIAL)));
         data.setNumCommercial(getInt(getColumnIndex(GameDataTable.Cols.NUM_COMMERCIAL)));
+        data.setGameStarted(getInt(getColumnIndex(GameDataTable.Cols.GAME_STARTED)) == 1);
         return data;
     }
 }

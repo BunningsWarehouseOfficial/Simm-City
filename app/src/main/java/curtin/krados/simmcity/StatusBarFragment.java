@@ -43,7 +43,7 @@ public class StatusBarFragment extends Fragment {
         //Initialising values
         mCityNameText   .setText(data.getSettings().getCityName()); //TODO Test with long city names
         mPopulationText .setText(getString(R.string.population, 0));
-        mDayText        .setText(getString(R.string.day, 0));
+        mDayText        .setText(getString(R.string.day, data.getGameTime()));
         mTemperatureText.setText(getString(R.string.temperature, 25)); //TODO Retrieve actual temperature if applicable, some other value if not
         mMoneyText      .setText(getString(R.string.money, data.getSettings().getInitialMoney()));
         mLastIncomeText .setText(getString(R.string.last_income, '+', 0));

@@ -17,7 +17,7 @@ public class GameDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + GameDataTable.NAME + "(" +
-                GameDataTable.Cols.ID + " INTEGER, " +
+                GameDataTable.Cols.ID + " TEXT, " +
                 GameDataTable.Cols.CITY_NAME + " TEXT, " +
                 GameDataTable.Cols.MAP_WIDTH + " INTEGER, " +
                 GameDataTable.Cols.MAP_HEIGHT + " INTEGER, " +
@@ -26,7 +26,8 @@ public class GameDbHelper extends SQLiteOpenHelper {
                 GameDataTable.Cols.GAME_TIME + " INTEGER, " +
                 GameDataTable.Cols.MONEY + " INTEGER, " +
                 GameDataTable.Cols.NUM_RESIDENTIAL + " INTEGER, " +
-                GameDataTable.Cols.NUM_COMMERCIAL + " INTEGER)");
+                GameDataTable.Cols.NUM_COMMERCIAL + " INTEGER, " +
+                GameDataTable.Cols.GAME_STARTED + " INTEGER)"); //Boolean
         //TODO Another table here
     }
 
