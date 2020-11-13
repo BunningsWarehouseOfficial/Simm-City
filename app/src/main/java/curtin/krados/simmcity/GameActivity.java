@@ -52,7 +52,7 @@ public class GameActivity extends AppCompatActivity {
         ft.replace(R.id.mapFrame, new DetailsFragment())
                 .commit();
     }
-    public void swapToMap() { //TODO Check this updates map with new thumbnails
+    public void swapToMap() {
         FragmentTransaction ft = mFm.beginTransaction();
         ft.replace(R.id.mapFrame, new MapFragment())
                 .commit();

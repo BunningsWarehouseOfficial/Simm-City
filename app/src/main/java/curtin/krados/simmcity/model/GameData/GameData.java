@@ -217,7 +217,9 @@ public class GameData {
      */
     public void clear() {
         String[] whereValue = { String.valueOf(0) };
-        db.delete(GameDataTable.NAME, GameDataTable.Cols.ID + " = ?", whereValue);
+        if (db != null) {
+            db.delete(GameDataTable.NAME, GameDataTable.Cols.ID + " = ?", whereValue);
+        }
     }
 
     //Private Methods

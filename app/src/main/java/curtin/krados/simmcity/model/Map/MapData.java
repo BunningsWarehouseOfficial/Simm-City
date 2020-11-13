@@ -265,7 +265,9 @@ public class MapData
      */
     public void clear() {
         String[] whereValue = { String.valueOf(0) };
-        db.delete(MapTable.NAME, MapTable.Cols.ID + " >= ?", whereValue);
+        if (db != null) {
+            db.delete(MapTable.NAME, MapTable.Cols.ID + " >= ?", whereValue);
+        }
     }
 
     //Private Methods
