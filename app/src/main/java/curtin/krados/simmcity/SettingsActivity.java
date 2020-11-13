@@ -7,9 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import curtin.krados.simmcity.model.GameData.GameData;
+import curtin.krados.simmcity.model.Settings;
 
 public class SettingsActivity extends AppCompatActivity {
     private GameData data;
@@ -19,6 +22,7 @@ public class SettingsActivity extends AppCompatActivity {
     private EditText mMapHeightInput;
     private EditText mInitialMoneyInput;
     private EditText mTaxRateInput;
+    private Button mDefaultButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,7 @@ public class SettingsActivity extends AppCompatActivity {
         mMapHeightInput    = findViewById(R.id.mapHeightInput);
         mInitialMoneyInput = findViewById(R.id.initialMoneyInput);
         mTaxRateInput      = findViewById(R.id.taxRateInput);
+        mDefaultButton     = findViewById(R.id.defaultButton);
 
         //Initialise EditText default values
         mCityNameInput    .setHint(data.getSettings().getCityName());
@@ -53,9 +58,14 @@ public class SettingsActivity extends AppCompatActivity {
                     mCityNameInput.setError(getString(R.string.city_name_error));
                 }
                 else {
-                    data.getSettings().setCityName(value);
-                    data.update();
-                    mCityNameInput.setHint(value);
+                    if (value.length() > Settings.MAX_NAME_LENGTH) {
+                        mCityNameInput.setError(getString(R.string.city_name_length_error));
+                    }
+                    else {
+                        data.getSettings().setCityName(value);
+                        data.update();
+                        mCityNameInput.setHint(value);
+                    }
                 }
             }
         });
@@ -139,11 +149,29 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         });
-    } //TODO Default button
+        mDefaultButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Settings settings = new Settings();
+                GameData.get().setSettings(settings);
+                updateUI();
+            }
+        });
+    }
 
     //Decoupling method for starting the activity
     public static Intent getIntent(Context c) {
         Intent intent = new Intent(c, SettingsActivity.class);
         return intent;
+    }
+
+    //Private Methods
+    private void updateUI() {
+        Settings settings = GameData.get().getSettings();
+        mCityNameInput    .setHint(settings.getCityName());
+        mMapWidthInput    .setHint(getString(R.string.map_width_value, settings.getMapWidth()));
+        mMapHeightInput   .setHint(getString(R.string.map_width_value, settings.getMapHeight()));
+        mInitialMoneyInput.setHint(getString(R.string.initial_money_value, settings.getInitialMoney()));
+        mTaxRateInput     .setHint(getString(R.string.tax_rate_value, settings.getTaxRate()));
     }
 }

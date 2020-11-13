@@ -27,6 +27,7 @@
     <string name="tax_rate_value">%.2f</string>
 
     <string name="city_name_error">Must enter a city name</string>
+    <string name="city_name_length_error">Entered city name is too long</string>
     <string name="map_width_error">Map width must be a positive integer</string>
     <string name="map_height_error">Map height must be a positive integer</string>
     <string name="initial_money_error">Initial money must be a non-negative integer</string>

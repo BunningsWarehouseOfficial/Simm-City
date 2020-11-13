@@ -3,6 +3,8 @@ package curtin.krados.simmcity.model;
 import android.database.sqlite.SQLiteDatabase;
 
 public class Settings {
+    public static final int MAX_NAME_LENGTH = 15;
+
     private String cityName = "Perth";
     private int mapWidth = 50;
     private int mapHeight = 10;

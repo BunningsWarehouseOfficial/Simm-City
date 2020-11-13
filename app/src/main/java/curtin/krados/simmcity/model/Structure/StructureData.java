@@ -31,7 +31,7 @@ public class StructureData
     private List<Structure> structureList = Arrays.asList(
             new Residential(R.drawable.ic_building1, "House"),
             new Residential(R.drawable.ic_building2, "House"),
-            new Residential(R.drawable.ic_building3, "House"),
+            new Residential(R.drawable.ic_building3, "Barn"),
             new Residential(R.drawable.ic_building4, "House"),
             new Commercial(R.drawable.ic_building5, "Factory"),
             new Commercial(R.drawable.ic_building8, "Factory"),

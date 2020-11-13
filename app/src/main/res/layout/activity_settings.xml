@@ -10,7 +10,7 @@
         android:id="@+id/initialMoneyInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="3"
+        android:ems="4"
         android:hint="@string/initial_money_value"
         android:importantForAutofill="no"
         android:inputType="number"
@@ -51,11 +51,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:ems="7"
+        android:ems="8"
         android:hint="@string/app_name"
         android:importantForAutofill="no"
         android:inputType="textShortMessage"
         app:layout_constraintBottom_toBottomOf="@+id/cityNameInputText"
+        app:layout_constraintEnd_toEndOf="@+id/settingsText"
         app:layout_constraintStart_toEndOf="@+id/cityNameInputText"
         app:layout_constraintTop_toTopOf="@+id/cityNameInputText" />
 
@@ -139,7 +140,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/default_button"
-        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/taxRateText" />
@@ -153,7 +153,7 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/mapWidthText"
         app:layout_constraintEnd_toStartOf="@+id/cityNameInput"
-        app:layout_constraintStart_toStartOf="@+id/mapWidthText"
+        app:layout_constraintStart_toStartOf="@+id/settingsText"
         app:layout_constraintTop_toBottomOf="@+id/settingsText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
