@@ -55,7 +55,10 @@ public class MainActivity extends AppCompatActivity {
                 data = GameData.recreate();
                 data.setDb(db);
 
-                MapData.get().regenerate(); //Regenerate game map and recreate Map table
+                MapData map = MapData.get();
+                map.clear();
+                map.load(MainActivity.this);
+                map.regenerate(); //Regenerate game map and recreate Map table
                 updateUI();
             }
         });

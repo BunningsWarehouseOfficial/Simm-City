@@ -200,8 +200,7 @@ public class MapData
     //Mutators
     public void regenerate()
     {
-        clear();
-        MapElement[][] newGrid = generateGrid();;
+        MapElement[][] newGrid = generateGrid();
         this.grid = newGrid;
         for (int ii = 0; ii < HEIGHT; ii++) {
             for (int jj = 0; jj < WIDTH; jj++) {
